@@ -1,6 +1,9 @@
 import React from 'react'
 import useSWR from "swr";
+import Head from 'next/head'
+import Image from 'next/image'
 import TambahData from '../components/tambahdata'
+import PanenUdangImg from '../public/PanenUdanghead.png'
 import {
     Container,
     Stack,
@@ -35,10 +38,13 @@ export default function Harga() {
 
     return (
         <div>
+            <Head>
+            <title>Harga Udang | PanenUdang</title>
+            </Head>
             <Container w="100vw" maxW="4xl" pt="8" pb="8">
                 <Box>
                     <Box m={6}>
-                    <Heading as="h1" size="3xl" mb={3}>Panen Udang</Heading>
+                        <Image src={PanenUdangImg} alt="panen udang header" placeholder="blur"/>
                     </Box>
                     <Divider mb={8} />
                     <TambahData />
