@@ -2,26 +2,24 @@ import React from 'react'
 import useSWR from "swr";
 import TambahData from '../components/tambahdata'
 import {
-    Flex,
     Container,
     Stack,
-    Spinner,
-    Image,
     Avatar,
     Divider,
     Heading,
     Box,
     Text
 } from '@chakra-ui/react'
-import format from 'date-fns/format'
+import formatISO from 'date-fns/formatISO'
+import { utcToZonedTime } from 'date-fns-tz'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 export default function Harga() {
-    const response = useSWR(`https://staging-app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=date,desc`,
+    const response = useSWR(`https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`,
     (url) => fetcher(url, {
       headers: {
-        'Authorization': `Bearer ${process.env.JALATOKENSTAG}`,
+        'Authorization': `Bearer ${process.env.JALATOKENPROD}`,
         'Accept': 'application/json',
       }
     }))
@@ -53,7 +51,8 @@ export default function Harga() {
                                     <Avatar name={d.creator.name} src={`https://app.jala.tech/img/cache/original/${d.creator.avatar}`} />
                                     <Text fontSize="xl">{d.region.full_name}</Text>
                                     <Text fontSize="sm">{d.created_at}</Text>
-                                    <Text fontSize="lg">{d.size_100}</Text>
+                                    <Text fontSize="lg">Size 100: {d.size_100}</Text>
+                                    <Text fontSize="sm">{d.remark}</Text>
                                 </Box>
                             )
                         }): 'no data'}
