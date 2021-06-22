@@ -14,14 +14,12 @@ import {
     useDisclosure,
 
     Checkbox,
-    CheckboxGroup,
-    VStack,
 
     Input,
     Textarea
 } from '@chakra-ui/react'
 import format from 'date-fns/format'
-import {useFormik, Field} from 'formik'
+import {useFormik} from 'formik'
 import useSWR from 'swr'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -30,8 +28,6 @@ export default function TambahData() {
 
     const [provinceName,
         setProvinceName] = useState('')
-    const [regionName,
-        setRegionName] = useState('')
 
     const listProvinceResponse = useSWR("https://app.jala.tech/api/regions?search&sort=&scope=province&per_page=3" +
             "4",
@@ -43,8 +39,6 @@ export default function TambahData() {
         }
     }))
 
-    // console.log('provinsi', listProvinceResponse.data)
-
     let province;
 
     if (listProvinceResponse.data) {
@@ -53,11 +47,11 @@ export default function TambahData() {
     let region;
 
     function submitData(value) {
-        console.log('data harga', value.region_id)
+        // console.log('data harga', value.region_id)
         const regions = value.region_id;
 
         if (value.region_id.length) {
-            console.log('regions', regions)
+            // console.log('regions', regions)
             regions.forEach(multipleSend)
             location.reload()
         } else {
@@ -111,18 +105,7 @@ export default function TambahData() {
 
     }
 
-    const listRegionResponse = useSWR(`https://app.jala.tech/api/regions?search&sort=&scope=regency&search=${provinceName}&per_page=100`, (url) => fetcher(url, {
-        headers: {
-            'Authorization': `Bearer ${process.env.JALATOKENPROD}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }))
-
-    if (listRegionResponse.data) {
-        region = listRegionResponse.data.data;
-        // console.log('ganti province', provinceName, region)
-    }
+    
 
     const {isOpen, onOpen, onClose} = useDisclosure()
 
@@ -141,6 +124,8 @@ export default function TambahData() {
         }
         return errors;
     };
+
+    
 
     const formik = useFormik({
         initialValues: {
@@ -174,10 +159,21 @@ export default function TambahData() {
         validate,
         onSubmit: values => {
             submitData(values)
-            // location.reload()
-            // submitData(values)
         }
     });
+
+    const listRegionResponse = useSWR(`https://app.jala.tech/api/regions?search&sort=&scope=regency&search=${provinceName}&per_page=100`, (url) => fetcher(url, {
+        headers: {
+            'Authorization': `Bearer ${process.env.JALATOKENPROD}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }))
+
+    if (listRegionResponse.data) {
+        region = listRegionResponse.data.data;
+    }
+
     return (
         <div>
             <Button onClick={onOpen} mb={4} size="lg" colorScheme="orange">
@@ -229,7 +225,12 @@ export default function TambahData() {
                                                             colorScheme="orange"
                                                             name="region_id"
                                                             id="region_id"
-                                                            onChange={formik.handleChange}
+                                                            onChange={
+                                                                (e)=>{
+                                                                    formik.values.region_id.push(e.target.value)
+                                                                    // console.log(formik.values.region_id)
+                                                                }
+                                                            }
                                                             value={d.id}
                                                             key={d.id}>
                                                             {d.name}
