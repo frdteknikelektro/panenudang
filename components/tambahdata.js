@@ -51,7 +51,7 @@ export default function TambahData() {
         const regions = value.region_id;
 
         if (value.region_id.length) {
-            // console.log('regions', regions)
+            console.log('regions', regions)
             regions.forEach(multipleSend)
             location.reload()
         } else {
@@ -130,6 +130,7 @@ export default function TambahData() {
     const formik = useFormik({
         initialValues: {
             region_id: [],
+            region_name: [],
             date: format(new Date(), 'yyyy-MM-dd'),
             species_id: 1,
             size_20: 0,
@@ -172,6 +173,7 @@ export default function TambahData() {
 
     if (listRegionResponse.data) {
         region = listRegionResponse.data.data;
+        // console.log(region)
     }
 
     return (
@@ -215,29 +217,73 @@ export default function TambahData() {
                                             {formik.touched.region_id && formik.errors.region_id
                                                 ? <Text mb={2} color="red.500" fontWeight={400} fontSize='xs'>{formik.errors.region_id}</Text>
                                                 : null}
-                                            <Text mb={2} color="gray.500" fontWeight={400} fontSize='xs'>note: satu kali submit hanya bisa untuk satu provinsi saja</Text>
+                                            <Text mb={2} color="gray.500" fontWeight={400} fontSize='xs'>note: sudah bisa pilih region di beda provinsi dalam sekali kirim!!</Text>
                                             <Text mb={2} color="orange.500" fontWeight={600}>Kota/Kabupaten</Text>
                                             <Box h={500} textAlign="left" overflow="scroll">
                                                 <Stack direction="column" spacing={3}>
                                                     {region && provinceName != ''
-                                                        ? region.map(d => <Checkbox
+                                                        ? region.map(d => 
+                                                        (formik.values.region_id.includes(d.id) ? <Checkbox defaultIsChecked
                                                             type="checkbox"
                                                             colorScheme="orange"
                                                             name="region_id"
-                                                            id="region_id"
+                                                            id={"region_id"+d.id}
                                                             onChange={
                                                                 (e)=>{
-                                                                    formik.values.region_id.push(e.target.value)
+                                                                    
+                                                                    var cb = document.getElementById(`region_id`+d.id)
+                                                                    // console.log('checked?', cb.checked, cb.isChecked);
+                                                                    if(cb.checked == true){
+                                                                        formik.values.region_id.push(e.target.value)
+                                                                        formik.values.region_name.push(d.name)
+                                                                    }else{
+                                                                        const index = formik.values.region_id.indexOf(e.target.value);
+                                                                        if (index > -1) {
+                                                                            formik.values.region_id.splice(index, 1);
+                                                                            formik.values.region_name.splice(index, 1)
+                                                                        }
+                                                                        // cb.isChecked = false;
+                                                                    }
                                                                     // console.log(formik.values.region_id)
+                                                                    // console.log(formik.values.region_name);
                                                                 }
                                                             }
                                                             value={d.id}
                                                             key={d.id}>
-                                                            {d.name}
-                                                        </Checkbox>)
+                                                            {d.name}</Checkbox> : 
+                                                            <Checkbox
+                                                            type="checkbox"
+                                                            colorScheme="orange"
+                                                            name="region_id"
+                                                            id={"region_id"+d.id}
+                                                            onChange={
+                                                                (e)=>{
+                                                                    var cb = document.getElementById(`region_id`+d.id)
+                                                                    if(cb.checked == true){
+                                                                        formik.values.region_id.push(e.target.value)
+                                                                        formik.values.region_name.push(d.name)
+                                                                    }else{
+                                                                        const index = formik.values.region_id.indexOf(e.target.value);
+                                                                        if (index > -1) {
+                                                                            formik.values.region_id.splice(index, 1);
+                                                                            formik.values.region_name.splice(index, 1)
+                                                                        }
+                                                                    }
+                                                                    // console.log(formik.values.region_id)
+                                                                    // console.log(formik.values.region_name);
+                                                                }
+                                                            }
+                                                            value={d.id}
+                                                            key={d.id}>
+                                                            {d.name}</Checkbox>)
+                                                        )
                                                         : <Text mb={2} color="gray.500" fontWeight={400} fontSize='sm'>Pilih Provinsi terlebih dahulu</Text>}
                                                 </Stack>
                                             </Box>
+                                            <Box>
+                                            {/* <Text mb={2} color="gray.500" fontWeight={400} fontSize='sm'>buat harga baru untuk untuk daerah: {formik.values.region_name.join()}</Text> */}
+                                            </Box>
+                                            
                                         </Box>
                                         <Box>
                                             <Text htmlFor="size_20" mb={2} color="orange.500" fontWeight={600}>Size 20</Text>
