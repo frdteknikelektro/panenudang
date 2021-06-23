@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import formatISO from 'date-fns/formatISO'
 import { utcToZonedTime } from 'date-fns-tz'
+import differenceInDays from 'date-fns/differenceInDays'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
@@ -35,6 +36,7 @@ export default function Harga() {
     console.log(response.data.data)
 
     const data = response.data.data;
+    const today = new Date();
 
     return (
         <div>
@@ -52,6 +54,7 @@ export default function Harga() {
                     <Stack spacing={8} direction="column">
                         {data? 
                         data.map((d)=>{
+                            
                             return(
                                 <Box key={d.id}>
                                     <Avatar name={d.creator.name} src={`https://app.jala.tech/img/cache/original/${d.creator.avatar}`} />
@@ -59,6 +62,8 @@ export default function Harga() {
                                     <Text fontSize="sm">{d.created_at}</Text>
                                     <Text fontSize="lg">Size 100: {d.size_100}</Text>
                                     <Text fontSize="sm">{d.remark}</Text>
+                                    {/* <Text fontSize="sm">{differenceInDays(d.created_at, new Date())}</Text> */}
+                                    {/* <Text fontSize="sm">{today}</Text> */}
                                 </Box>
                             )
                         }): 'no data'}

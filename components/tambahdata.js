@@ -152,7 +152,7 @@ export default function TambahData() {
             size_180: 0,
             size_190: 0,
             size_200: 0,
-            remark: "dikirim dari Syauqy",
+            remark: "",
             created_by: 10579,
             country_id: 'ID',
             currency_id: 'IDR'
@@ -173,8 +173,9 @@ export default function TambahData() {
 
     if (listRegionResponse.data) {
         region = listRegionResponse.data.data;
-        // console.log(region)
     }
+
+    const regionlist = document.getElementById('region-list')
 
     return (
         <div>
@@ -191,7 +192,7 @@ export default function TambahData() {
                                 <div className="form-body">
                                     <Stack spacing={4} direction="row">
                                         <Box>
-                                            <Text mb={2} color="orange.500" fontWeight={600}>Tanggal</Text>
+                                            <Text mb={2} color="gray.500" fontWeight={600}>Tanggal</Text>
                                             <Input
                                                 mb={2}
                                                 id="tanggal"
@@ -199,7 +200,7 @@ export default function TambahData() {
                                                 type="date"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.date}/>
-                                            <Text mb={2} color="orange.500" fontWeight={600}>Provinsi</Text>
+                                            <Text mb={2} color="gray.500" fontWeight={600}>Provinsi</Text>
                                             <Select
                                                 id="province-picker"
                                                 size="md"
@@ -218,7 +219,7 @@ export default function TambahData() {
                                                 ? <Text mb={2} color="red.500" fontWeight={400} fontSize='xs'>{formik.errors.region_id}</Text>
                                                 : null}
                                             <Text mb={2} color="gray.500" fontWeight={400} fontSize='xs'>note: sudah bisa pilih region di beda provinsi dalam sekali kirim!!</Text>
-                                            <Text mb={2} color="orange.500" fontWeight={600}>Kota/Kabupaten</Text>
+                                            <Text mb={2} color="gray.500" fontWeight={600}>Kota/Kabupaten</Text>
                                             <Box h={500} textAlign="left" overflow="scroll">
                                                 <Stack direction="column" spacing={3}>
                                                     {region && provinceName != ''
@@ -232,7 +233,6 @@ export default function TambahData() {
                                                                 (e)=>{
                                                                     
                                                                     var cb = document.getElementById(`region_id`+d.id)
-                                                                    // console.log('checked?', cb.checked, cb.isChecked);
                                                                     if(cb.checked == true){
                                                                         formik.values.region_id.push(e.target.value)
                                                                         formik.values.region_name.push(d.name)
@@ -244,6 +244,7 @@ export default function TambahData() {
                                                                         }
                                                                         // cb.isChecked = false;
                                                                     }
+                                                                    regionlist.innerText = `${formik.values.region_name.join(', ')}`
                                                                     // console.log(formik.values.region_id)
                                                                     // console.log(formik.values.region_name);
                                                                 }
@@ -271,6 +272,7 @@ export default function TambahData() {
                                                                     }
                                                                     // console.log(formik.values.region_id)
                                                                     // console.log(formik.values.region_name);
+                                                                    regionlist.innerText = `${formik.values.region_name.join(', ')}`
                                                                 }
                                                             }
                                                             value={d.id}
@@ -280,13 +282,9 @@ export default function TambahData() {
                                                         : <Text mb={2} color="gray.500" fontWeight={400} fontSize='sm'>Pilih Provinsi terlebih dahulu</Text>}
                                                 </Stack>
                                             </Box>
-                                            <Box>
-                                            {/* <Text mb={2} color="gray.500" fontWeight={400} fontSize='sm'>buat harga baru untuk untuk daerah: {formik.values.region_name.join()}</Text> */}
-                                            </Box>
-                                            
                                         </Box>
                                         <Box>
-                                            <Text htmlFor="size_20" mb={2} color="orange.500" fontWeight={600}>Size 20</Text>
+                                            <Text htmlFor="size_20" mb={2} color="gray.500" fontWeight={600}>Size 20</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_20"
@@ -295,7 +293,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_20}/>
-                                            <Text htmlFor="size_30" mb={2} color="orange.500" fontWeight={600}>Size 30</Text>
+                                            <Text htmlFor="size_30" mb={2} color="gray.500" fontWeight={600}>Size 30</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_30"
@@ -304,7 +302,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_30}/>
-                                            <Text htmlFor="size_40" mb={2} color="orange.500" fontWeight={600}>Size 40</Text>
+                                            <Text htmlFor="size_40" mb={2} color="gray.500" fontWeight={600}>Size 40</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_40"
@@ -313,7 +311,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_40}/>
-                                            <Text htmlFor="size_50" mb={2} color="orange.500" fontWeight={600}>Size 50</Text>
+                                            <Text htmlFor="size_50" mb={2} color="gray.500" fontWeight={600}>Size 50</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_50"
@@ -322,7 +320,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_50}/>
-                                            <Text htmlFor="size_60" mb={2} color="orange.500" fontWeight={600}>Size 60</Text>
+                                            <Text htmlFor="size_60" mb={2} color="gray.500" fontWeight={600}>Size 60</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_60"
@@ -331,7 +329,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_60}/>
-                                            <Text htmlFor="size_70" mb={2} color="orange.500" fontWeight={600}>Size 70</Text>
+                                            <Text htmlFor="size_70" mb={2} color="gray.500" fontWeight={600}>Size 70</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_70"
@@ -340,7 +338,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_70}/>
-                                            <Text htmlFor="size_80" mb={2} color="orange.500" fontWeight={600}>Size 80</Text>
+                                            <Text htmlFor="size_80" mb={2} color="gray.500" fontWeight={600}>Size 80</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_80"
@@ -349,7 +347,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_80}/>
-                                            <Text htmlFor="size_90" mb={2} color="orange.500" fontWeight={600}>Size 90</Text>
+                                            <Text htmlFor="size_90" mb={2} color="gray.500" fontWeight={600}>Size 90</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_90"
@@ -358,7 +356,10 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_90}/>
-                                            <Text htmlFor="size_100" mb={2} color="orange.500" fontWeight={600}>Size 100</Text>
+                                            
+                                        </Box>
+                                        <Box>
+                                        <Text htmlFor="size_100" mb={2} color="orange.500" fontWeight={800}>Size 100 *wajib diisi </Text>
                                             <Input
                                                 mb={2}
                                                 id="size_100"
@@ -370,9 +371,7 @@ export default function TambahData() {
                                                 value={formik.values.size_100}/> {formik.touched.size_100 && formik.errors.size_100
                                                 ? <Text mb={2} color="red.500" fontWeight={400} fontSize='xs'>{formik.errors.size_100}</Text>
                                                 : null}
-                                        </Box>
-                                        <Box>
-                                            <Text htmlFor="size_110" mb={2} color="orange.500" fontWeight={600}>Size 110</Text>
+                                            <Text htmlFor="size_110" mb={2} color="gray.500" fontWeight={600}>Size 110</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_110"
@@ -381,7 +380,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_110}/>
-                                            <Text htmlFor="size_120" mb={2} color="orange.500" fontWeight={600}>Size 120</Text>
+                                            <Text htmlFor="size_120" mb={2} color="gray.500" fontWeight={600}>Size 120</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_120"
@@ -390,7 +389,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_120}/>
-                                            <Text htmlFor="size_130" mb={2} color="orange.500" fontWeight={600}>Size 130</Text>
+                                            <Text htmlFor="size_130" mb={2} color="gray.500" fontWeight={600}>Size 130</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_130"
@@ -399,7 +398,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_130}/>
-                                            <Text htmlFor="size_140" mb={2} color="orange.500" fontWeight={600}>Size 140</Text>
+                                            <Text htmlFor="size_140" mb={2} color="gray.500" fontWeight={600}>Size 140</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_140"
@@ -408,7 +407,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_140}/>
-                                            <Text htmlFor="size_150" mb={2} color="orange.500" fontWeight={600}>Size 150</Text>
+                                            <Text htmlFor="size_150" mb={2} color="gray.500" fontWeight={600}>Size 150</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_150"
@@ -417,7 +416,7 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_150}/>
-                                            <Text htmlFor="size_160" mb={2} color="orange.500" fontWeight={600}>Size 160</Text>
+                                            {/* <Text htmlFor="size_160" mb={2} color="orange.500" fontWeight={600}>Size 160</Text>
                                             <Input
                                                 mb={2}
                                                 id="size_160"
@@ -461,19 +460,24 @@ export default function TambahData() {
                                                 type="number"
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
-                                                value={formik.values.size_200}/>
-                                        </Box>
-                                    </Stack>
-                                    <Text htmlFor="remark" mb={2} color="orange.500" fontWeight={600}>Catatan</Text>
+                                                value={formik.values.size_200}/> */}
+                                                <Text htmlFor="remark" mb={2} color="gray
+                                                .500" fontWeight={600}>Catatan</Text>
                                     <Textarea
                                         mb={2}
                                         rows="10"
                                         id="remark"
                                         name="remark"
-                                        placeholder="Format markdown"
+                                        placeholder="isi catatan anda di sini"
                                         type="text"
                                         onChange={formik.handleChange}
                                         value={formik.values.remark}/>
+                                        </Box>
+                                    </Stack>
+                                    <Box mt={4} mb={2}>
+                                            <Text color="gray.600" fontWeight={400} fontSize='sm'>buat harga baru untuk untuk daerah:</Text>
+                                            <Text color="orange.500" id="region-list" fontWeight={500} fontSize='md'>{formik.values.region_name.join()}</Text>
+                                            </Box>
                                 </div>
                                 <Button
                                     mb={2}
