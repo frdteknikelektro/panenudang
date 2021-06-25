@@ -43,7 +43,7 @@ export default function Harga() {
                     position: "fixed"
                 }}>
                     <motion.div animate={{
-      scale: [1, 1.5, 1.5, 1, 1],
+      scale: [0.5, 1, 1, 0.5, 0.5],
       rotate: [0, 270, 0, 270, 0],
       borderRadius: ["20%", "20%", "50%", "50%", "20%"],
     }}>
@@ -72,7 +72,7 @@ export default function Harga() {
                     <Divider mb={8}/>
                     <TambahData/>
                     <Heading mb={4} mt={4} as="h3" size="md" color="gray.600">Harga Terbaru</Heading>
-                    <Stack spacing={8} direction="column">
+                    <Stack spacing={4} direction="column">
                         {data
                             ? data.map((d) => {
 

@@ -129,9 +129,9 @@ export default function LihatData(data) {
                     <Box p={2} w="xl">
                         <Text fontSize="md" fontWeight="semibold">{data.data.region.full_name}</Text>
                         <Text fontSize="sm" color="gray.500">{data.data.creator.name} &bull; {format(parseISO(data.data.date), 'dd MMMM yyyy')}</Text>
-                        <Text fontSize="xs" color="gray.500" isTruncated>{data.data.remark}</Text>
+                        {/* <Text fontSize="xs" color="gray.500">{data.data.remark}</Text> */}
                     </Box>
-                    <Box p={2} w="md" align="right">
+                    <Box p={2}  align="right">
                         <Text fontSize="sm" color="gray.500">Size 100</Text>
                         <Text fontSize="2xl" fontWeight="bold">{data.data.size_100}</Text>
                     </Box>
