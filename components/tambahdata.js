@@ -291,7 +291,7 @@ export default function TambahData() {
                                                 </Stack>
                                             </Box>
                                         </Box>
-                                        <Box>
+                                        <Box mt={2}>
                                             <Text htmlFor="size_20" mb={2} color="gray.500" fontWeight={600}>Size 20</Text>
                                             <Input
                                                 mb={2}
