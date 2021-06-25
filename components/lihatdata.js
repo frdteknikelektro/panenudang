@@ -1,108 +1,78 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {
+    Container,
     Button,
-    Text,
-    Select,
     Stack,
+    Avatar,
+    Divider,
+    Heading,
+    Select,
+    Input,
+    Icon,
+    Textarea,
     Box,
+    Text,
     Badge,
-
     Drawer,
     DrawerBody,
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
     useDisclosure,
-
-    Checkbox,
-
-    Input,
-    Textarea,
     useToast
 } from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import format from 'date-fns/format'
+import parseISO from 'date-fns/parseISO'
+import differenceInDays from 'date-fns/differenceInDays'
 import {useFormik} from 'formik'
-import useSWR,{trigger} from 'swr'
+import {trigger} from 'swr'
+import HapusData from './hapusdata'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-export default function TambahData() {
+export default function LihatData(data) {
+    // console.log(data, data.id)
 
-    const [provinceName,
-        setProvinceName] = useState('')
-    
-        const toast = useToast()
+    const {isOpen, onOpen, onClose} = useDisclosure()
 
-    const listProvinceResponse = useSWR("https://app.jala.tech/api/regions?search&sort=&scope=province&per_page=3" +
-            "4",
-    (url) => fetcher(url, {
-        headers: {
-            'Authorization': `Bearer ${process.env.JALATOKENPROD}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }))
+    const toast = useToast()
 
-    let province;
-
-    if (listProvinceResponse.data) {
-        province = listProvinceResponse.data.data;
-    }
-    let region;
-
-    function submitData(values) {
-        const regions = values.region_id;
-
-        if (values.region_id.length) {
-            // console.log('regions', regions)
-            regions.forEach(multipleSend)
-            
-            toast({
-                title: "Berhasil",
-                description: `Harga baru untuk ${values.region_name} berhasil dibuat`,
-                status: "success",
-                duration: 5000,
-              })
-              trigger(`https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`)
-              // location.reload()
-        } else {
-            console.log('pilih provinsi')
-        }
-
-        function multipleSend(value, index) {
-            const dataHarga = {
-                region_id: values.region_id[index],
-            date: values.date,
-            species_id: values.species_id,
-            size_20: values.size_20,
-            size_30: values.size_30,
-            size_40: values.size_40,
-            size_50: values.size_50,
-            size_60: values.size_60,
-            size_70: values.size_70,
-            size_80: values.size_80,
-            size_90: values.size_90,
-            size_100: values.size_100,
-            size_110: values.size_110,
-            size_120: values.size_120,
-            size_130: values.size_130,
-            size_140: values.size_140,
-            size_150: values.size_150,
-            size_160: values.size_160,
-            size_170: values.size_170,
-            size_180: values.size_180,
-            size_190: values.size_190,
-            size_200: values.size_200,
-            remark: values.remark,
+    const formik = useFormik({
+        initialValues: {
+            region_id: data.data.region_id,
+            date: data.data.date,
+            species_id: data.data.species_id,
+            size_20: data.data.size_20 ? data.data.size_20 : 0,
+            size_30: data.data.size_30 ? data.data.size_30 : 0,
+            size_40: data.data.size_40 ? data.data.size_40 : 0,
+            size_50: data.data.size_50 ? data.data.size_50 : 0,
+            size_60: data.data.size_60 ? data.data.size_60 : 0,
+            size_70: data.data.size_70 ? data.data.size_70 : 0,
+            size_80: data.data.size_80 ? data.data.size_80 : 0,
+            size_90: data.data.size_90 ? data.data.size_90 : 0,
+            size_100: data.data.size_100 ? data.data.size_100 : 0,
+            size_110: data.data.size_110? data.data.size_110 : 0,
+            size_120: data.data.size_120? data.data.size_120 : 0,
+            size_130: data.data.size_130? data.data.size_130 : 0,
+            size_140: data.data.size_140? data.data.size_140 : 0,
+            size_150: data.data.size_150? data.data.size_150 : 0,
+            remark: data.data.remark,
             created_by: 10579,
             country_id: 'ID',
             currency_id: 'IDR'
-            }
-            console.log('kirim data ', dataHarga, index, value)
-            fetch(`https://app.jala.tech/api/shrimp_prices`, {
-                method: 'POST',
-                body: JSON.stringify(dataHarga),
+        },
+        validate,
+        onSubmit: values => {
+            editData(values)
+        }
+    });
+
+    function editData(value){
+        console.log(data.id, value)
+        fetch(`https://app.jala.tech/api/shrimp_prices/${data.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(value),
                     headers: {
                         'Authorization': `Bearer ${process.env.JALATOKENPROD}`,
                         'Accept': 'application/json',
@@ -112,14 +82,15 @@ export default function TambahData() {
                 .then(response => response.text())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
-                
-        }
-
+                toast({
+                    title: "Berhasil",
+                    description: `Informasi harga ${data.data.region.full_name} berhasil diubah`,
+                    status: "success",
+                    duration: 5000,
+                  })
+                trigger(`https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`)
+                // location.reload()
     }
-
-    
-
-    const {isOpen, onOpen, onClose} = useDisclosure()
 
     const validate = values => {
         const errors = {};
@@ -137,75 +108,49 @@ export default function TambahData() {
         return errors;
     };
 
+
     
-
-    const formik = useFormik({
-        initialValues: {
-            region_id: [],
-            region_name: [],
-            date: format(new Date(), 'yyyy-MM-dd'),
-            species_id: 1,
-            size_20: 0,
-            size_30: 0,
-            size_40: 0,
-            size_50: 0,
-            size_60: 0,
-            size_70: 0,
-            size_80: 0,
-            size_90: 0,
-            size_100: 0,
-            size_110: 0,
-            size_120: 0,
-            size_130: 0,
-            size_140: 0,
-            size_150: 0,
-            size_160: 0,
-            size_170: 0,
-            size_180: 0,
-            size_190: 0,
-            size_200: 0,
-            remark: "",
-            created_by: 10579,
-            country_id: 'ID',
-            currency_id: 'IDR'
-        },
-        validate,
-        onSubmit: values => {
-            submitData(values)
-        }
-    });
-
-    const listRegionResponse = useSWR(`https://app.jala.tech/api/regions?search&sort=&scope=regency&search=${provinceName}&per_page=100`, (url) => fetcher(url, {
-        headers: {
-            'Authorization': `Bearer ${process.env.JALATOKENPROD}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }))
-
-    if (listRegionResponse.data) {
-        region = listRegionResponse.data.data;
-    }
-
-    const regionlist = document.getElementById('region-list')
-
     return (
         <div>
-            <Button onClick={onOpen} mb={4} size="lg" colorScheme="orange">
-                Tambah Data
-            </Button>
+            <Box
+                key={data.id}
+                maxW="xl"
+                borderWidth="1px"
+                borderRadius="lg"
+                onClick={onOpen} style={{cursor: "pointer"}}>
+                    {differenceInDays(new Date(), parseISO(data.data.date)) < 6
+                                ? <Badge colorScheme="orange">New</Badge>
+                                : ''}
+                <Stack direction="row" spacing={2}>
+                    <Box p={2}>
+                        <Avatar
+                            src={`https://app.jala.tech/img/cache/original/${data.data.creator.avatar}`}/>
+                    </Box>
+                    <Box p={2} w="xl">
+                        <Text fontSize="md" fontWeight="semibold">{data.data.region.full_name}</Text>
+                        <Text fontSize="sm" color="gray.500">{data.data.creator.name} &bull; {format(parseISO(data.data.date), 'dd MMMM yyyy')}</Text>
+                        <Text fontSize="xs" color="gray.500" isTruncated>{data.data.remark}</Text>
+                    </Box>
+                    <Box p={2} w="md" align="right">
+                        <Text fontSize="sm" color="gray.500">Size 100</Text>
+                        <Text fontSize="2xl" fontWeight="bold">{data.data.size_100}</Text>
+                    </Box>
+                </Stack>
+            </Box>
+
 
             <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="md">
+                {/* {console.log('harga terpilih', hargaUdang)} */}
                 <DrawerOverlay>
                     <DrawerContent>
-                    <Badge p={4} fontSize="0.8em" onClick={() => {onClose()}} style={{cursor: "pointer"}}><ArrowBackIcon w={4} h={4} /> Kembali</Badge>
-                        <DrawerHeader>Tambah Harga Udang</DrawerHeader>
+                        <Badge p={4} fontSize="0.8em" onClick={() => {onClose()}} style={{cursor: "pointer"}}><ArrowBackIcon w={4} h={4} /> Kembali</Badge>
+                        <DrawerHeader>{data.data.region.full_name} <br/> {format(parseISO(data.data.date), 'dd MMMM yyyy')}</DrawerHeader>
                         <DrawerBody>
                             <form onSubmit={formik.handleSubmit}>
                                 <div className="form-body">
                                     {/* <Stack spacing={4} direction="row"> */}
                                         <Box>
-                                            <Text mb={2} color="gray.500" fontWeight={600}>Tanggal</Text>
+                                        <Text mb={2} color="gray.500" fontWeight={600}>Tanggal</Text>
                                             <Input
                                                 mb={2}
                                                 id="tanggal"
@@ -213,84 +158,8 @@ export default function TambahData() {
                                                 type="date"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.date}/>
-                                            <Text mb={2} color="gray.500" fontWeight={600}>Provinsi</Text>
-                                            <Select
-                                                id="province-picker"
-                                                size="md"
-                                                mb={2}
-                                                value={provinceName}
-                                                onBlur={formik.handleBlur}
-                                                onChange={(e) => {
-                                                setProvinceName(e.target.value);
-                                            }}>
-                                                <option value=''>Pilih Provinsi</option>
-                                                {province
-                                                    ? province.map(d => <option value={d.name} htmlFor="province-picker" key={d.id}>{d.name}</option>)
-                                                    : 'Loading'}
-                                            </Select>
-                                            {formik.touched.region_id && formik.errors.region_id
-                                                ? <Text mb={2} color="red.500" fontWeight={400} fontSize='xs'>{formik.errors.region_id}</Text>
-                                                : null}
-                                            <Text mb={2} color="gray.500" fontWeight={400} fontSize='xs'>note: sudah bisa pilih region di beda provinsi dalam sekali kirim!!</Text>
-                                            <Text mb={2} color="gray.500" fontWeight={600}>Kota/Kabupaten</Text>
-                                            <Box textAlign="left" overflow="scroll">
-                                                <Stack direction="column" spacing={3} borderWidth="1px" borderRadius="lg" p={2}>
-                                                    {region && provinceName != ''
-                                                        ? region.map(d => 
-                                                        (formik.values.region_id.includes(d.id) ? <Checkbox defaultIsChecked
-                                                            type="checkbox"
-                                                            colorScheme="orange"
-                                                            name="region_id"
-                                                            id={"region_id"+d.id}
-                                                            onChange={
-                                                                (e)=>{
-                                                                    
-                                                                    var cb = document.getElementById(`region_id`+d.id)
-                                                                    if(cb.checked == true){
-                                                                        formik.values.region_id.push(e.target.value)
-                                                                        formik.values.region_name.push(d.name)
-                                                                    }else{
-                                                                        const index = formik.values.region_id.indexOf(e.target.value);
-                                                                        if (index > -1) {
-                                                                            formik.values.region_id.splice(index, 1);
-                                                                            formik.values.region_name.splice(index, 1)
-                                                                        }
-                                                                    }
-                                                                    regionlist.innerText = `${formik.values.region_name.join(', ')}`
-                                                                }
-                                                            }
-                                                            value={d.id}
-                                                            key={d.id}>
-                                                            {d.name}</Checkbox> : 
-                                                            <Checkbox
-                                                            type="checkbox"
-                                                            colorScheme="orange"
-                                                            name="region_id"
-                                                            id={"region_id"+d.id}
-                                                            onChange={
-                                                                (e)=>{
-                                                                    var cb = document.getElementById(`region_id`+d.id)
-                                                                    if(cb.checked == true){
-                                                                        formik.values.region_id.push(e.target.value)
-                                                                        formik.values.region_name.push(d.name)
-                                                                    }else{
-                                                                        const index = formik.values.region_id.indexOf(e.target.value);
-                                                                        if (index > -1) {
-                                                                            formik.values.region_id.splice(index, 1);
-                                                                            formik.values.region_name.splice(index, 1)
-                                                                        }
-                                                                    }
-                                                                    regionlist.innerText = `${formik.values.region_name.join(', ')}`
-                                                                }
-                                                            }
-                                                            value={d.id}
-                                                            key={d.id}>
-                                                            {d.name}</Checkbox>)
-                                                        )
-                                                        : <Text mb={2} color="gray.500" fontWeight={400} fontSize='sm'>Pilih Provinsi terlebih dahulu</Text>}
-                                                </Stack>
-                                            </Box>
                                         </Box>
+                                       
                                         <Box>
                                             <Text htmlFor="size_20" mb={2} color="gray.500" fontWeight={600}>Size 20</Text>
                                             <Input
@@ -424,8 +293,8 @@ export default function TambahData() {
                                                 placeholder="Dalam Rp"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.size_150}/>
-                                                <Text htmlFor="remark" mb={2} color="gray.500" fontWeight={600}>Catatan</Text>
-                                    <Textarea
+                                            <Text htmlFor="remark" mb={2} color="gray.500" fontWeight={600}>Catatan</Text>
+                                                <Textarea
                                         mb={2}
                                         rows="5"
                                         id="remark"
@@ -433,32 +302,30 @@ export default function TambahData() {
                                         placeholder="isi catatan anda di sini"
                                         type="text"
                                         onChange={formik.handleChange}
-                                        value={formik.values.remark}/>
+                                        value={formik.values.remark ? formik.values.remark : ''}/>
+                                    
                                         </Box>
                                     {/* </Stack> */}
-                                    <Box mt={4} mb={2}>
-                                            <Text color="gray.600" fontWeight={400} fontSize='sm'>buat harga baru untuk untuk daerah:</Text>
-                                            <Text color="orange.500" id="region-list" fontWeight={500} fontSize='md'>{formik.values.region_name.join()}</Text>
-                                            </Box>
+
                                 </div>
                                 <Button
                                     mb={2}
                                     mt={2}
                                     isFullWidth
-                                    colorScheme="orange"
+                                    colorScheme="blue"
                                     size="lg"
                                     aria-label="submit entry"
                                     onClick={() => {
                                     onClose()
                                 }}
-                                    type="submit">Tambah Harga</Button>
+                                    type="submit">Ubah Harga</Button>
+                                    <HapusData harga={data} />
                             </form>
                         </DrawerBody>
                     </DrawerContent>
 
                 </DrawerOverlay>
             </Drawer>
-
         </div>
     )
 }
