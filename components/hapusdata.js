@@ -14,7 +14,7 @@ import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
 import {trigger} from 'swr'
 
-export default function HapusData(harga, tutupDrawer) {
+export default function HapusData(harga) {
 
     const {isOpen, onOpen, onClose} = useDisclosure()
     const cancelRef = useRef();
@@ -24,7 +24,7 @@ export default function HapusData(harga, tutupDrawer) {
     // console.log('hapus', harga.harga.data)
 
     function deleteData(id) {
-        console.log(id)
+        // console.log(id)
         fetch(`https://app.jala.tech/api/shrimp_prices/${id}`, {
                 method: 'DELETE',
                 // body: JSON.stringify(value),
@@ -35,7 +35,7 @@ export default function HapusData(harga, tutupDrawer) {
                     }
                 })
                 .then(response => response.text())
-                .then(result => console.log(result))
+                // .then(result => console.log(result))
                 .catch(error => console.log('error', error));
                 toast({
                     title: "Menghapus",

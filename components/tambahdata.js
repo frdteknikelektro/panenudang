@@ -65,7 +65,7 @@ export default function TambahData() {
                 duration: 5000,
               })
               trigger(`https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`)
-              // location.reload()
+              location.reload()
         } else {
             console.log('pilih provinsi')
         }
@@ -110,7 +110,7 @@ export default function TambahData() {
                     }
                 })
                 .then(response => response.text())
-                .then(result => console.log(result))
+                // .then(result => console.log(result))
                 .catch(error => console.log('error', error));
                 
         }

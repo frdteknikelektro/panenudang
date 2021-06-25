@@ -29,7 +29,6 @@ import {useFormik} from 'formik'
 import {trigger} from 'swr'
 import HapusData from './hapusdata'
 
-const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 export default function LihatData(data) {
     // console.log(data, data.id)
@@ -69,7 +68,7 @@ export default function LihatData(data) {
     });
 
     function editData(value){
-        console.log(data.id, value)
+        // console.log(data.id, value)
         fetch(`https://app.jala.tech/api/shrimp_prices/${data.id}`, {
                 method: 'PUT',
                 body: JSON.stringify(value),
@@ -80,7 +79,7 @@ export default function LihatData(data) {
                     }
                 })
                 .then(response => response.text())
-                .then(result => console.log(result))
+                // .then(result => console.log(result))
                 .catch(error => console.log('error', error));
                 toast({
                     title: "Berhasil",
@@ -89,7 +88,7 @@ export default function LihatData(data) {
                     duration: 5000,
                   })
                 trigger(`https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`)
-                // location.reload()
+                location.reload()
     }
 
     const validate = values => {
