@@ -199,7 +199,9 @@ export default function TambahData() {
                 <DrawerOverlay>
                     <DrawerContent>
                     <Badge p={4} fontSize="0.8em" onClick={() => {onClose()}} style={{cursor: "pointer"}}><ArrowBackIcon w={4} h={4} /> Kembali</Badge>
-                        <DrawerHeader>Tambah Harga Udang</DrawerHeader>
+                        <DrawerHeader><Text>Tambah Harga Udang</Text>
+                        <Text color="orange.500" id="region-list" fontWeight={500} fontSize='xs'>{formik.values.region_name.join()}</Text>
+                        </DrawerHeader>
                         <DrawerBody>
                             <form onSubmit={formik.handleSubmit}>
                                 <div className="form-body">
@@ -436,10 +438,10 @@ export default function TambahData() {
                                         value={formik.values.remark}/>
                                         </Box>
                                     {/* </Stack> */}
-                                    <Box mt={4} mb={2}>
+                                    {/* <Box mt={4} mb={2}>
                                             <Text color="gray.600" fontWeight={400} fontSize='sm'>buat harga baru untuk untuk daerah:</Text>
                                             <Text color="orange.500" id="region-list" fontWeight={500} fontSize='md'>{formik.values.region_name.join()}</Text>
-                                            </Box>
+                                            </Box> */}
                                 </div>
                                 <Button
                                     mb={2}
