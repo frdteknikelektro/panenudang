@@ -19,15 +19,20 @@ import {
     DrawerOverlay,
     DrawerContent,
     useDisclosure,
-    useToast
+    useToast,
 } from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
+
+
 import format from 'date-fns/format'
+import { id } from 'date-fns/locale'
 import parseISO from 'date-fns/parseISO'
 import differenceInDays from 'date-fns/differenceInDays'
 import {useFormik} from 'formik'
 import {trigger} from 'swr'
+
 import HapusData from './hapusdata'
+import StoryModal from './storymodal'
 
 
 export default function LihatData(data) {
@@ -127,7 +132,7 @@ export default function LihatData(data) {
                     </Box>
                     <Box p={2} w="xl">
                         <Text fontSize="md" fontWeight="semibold">{data.data.region.full_name}</Text>
-                        <Text fontSize="sm" color="gray.500">{data.data.creator.name} &bull; {format(parseISO(data.data.date), 'dd MMMM yyyy')}</Text>
+                        <Text fontSize="sm" color="gray.500">{data.data.creator.name} &bull; {format(parseISO(data.data.date), 'dd MMMM yyyy', {locale: id})}</Text>
                         {/* <Text fontSize="xs" color="gray.500">{data.data.remark}</Text> */}
                     </Box>
                     <Box p={2}  align="right">
@@ -143,8 +148,10 @@ export default function LihatData(data) {
                 <DrawerOverlay>
                     <DrawerContent>
                         <Badge p={4} fontSize="0.8em" onClick={() => {onClose()}} style={{cursor: "pointer"}}><ArrowBackIcon w={4} h={4} /> Kembali</Badge>
-                        <DrawerHeader>{data.data.region.full_name} <br/> {format(parseISO(data.data.date), 'dd MMMM yyyy')}</DrawerHeader>
+                        <DrawerHeader><Text>{data.data.region.full_name}</Text> 
+                        <Text color="gray.500" fontWeight={400} fontSize='sm'>{format(parseISO(data.data.date), 'dd MMMM yyyy', {locale: id})}</Text></DrawerHeader>
                         <DrawerBody>
+                        <StoryModal data={data.data} />
                             <form onSubmit={formik.handleSubmit}>
                                 <div className="form-body">
                                     {/* <Stack spacing={4} direction="row"> */}
@@ -307,6 +314,7 @@ export default function LihatData(data) {
                                     {/* </Stack> */}
 
                                 </div>
+                                
                                 <Button
                                     mb={2}
                                     mt={2}
