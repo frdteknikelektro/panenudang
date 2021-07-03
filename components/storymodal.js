@@ -81,60 +81,57 @@ export default function StoryModal(data) {
                         p={4}>
                         <Box borderRadius="15">
                             <Grid templateColumns="repeat(2, 1fr)" gap={4} style={{backgroundColor: "rgba(225,225,225,0.8)"}} borderTopRadius="10">
-                                <Box p={1} style={{backgroundColor: "rgba(27,119,223,0.9)"}} align="center" color="white" borderTopRightRadius="15" borderTopLeftRadius="10">
-                                <Text fontSize="sm" align="center" color="white" fontWeight={700}>{format(parseISO(data.data.date), 'dd MMMM yyyy', {locale: id})}</Text>
+                                <Box p={1} pb={0} style={{backgroundColor: "rgba(27,119,223,0.9)"}} align="center" color="white" borderTopRightRadius="15" borderTopLeftRadius="10">
+                                <Text fontSize="xs" align="center" color="white" fontWeight={700}>{format(parseISO(data.data.date), 'dd MMMM yyyy', {locale: id})}</Text>
                                 </Box>
-                                <Box p={1}  align="center" borderTopRightRadius="10">
-                                <Text fontSize="sm" color="#004492" fontWeight={700}>{data.data.species.name}</Text>
+                                <Box p={1} pb={0} align="center" borderTopRightRadius="10">
+                                <Text fontSize="xs" color="#004492" fontWeight={700}>{data.data.species.name}</Text>
                                 </Box>
                             </Grid>
-                            <Box bgColor="#004492" p={1} pl={4} pr={4} >
-                                <Image src={PanenUdangImg} style={{filter: "brightness(150%)"}} alt="panen udang"/>
+                            <Box bgColor="#004492" p={1} pl={4} pr={4} align="center" >
+                                <Image src={PanenUdangImg} width={240} height={55} alt="panen udang"/>
                             </Box>
                             <Box style={{backgroundColor: "rgba(249,157,27,0.6)"}} >
                             <Box style={{backgroundColor: "rgba(27,119,223,0.8)"}} p={2} borderBottomRadius="20">
-                            <Heading size="lg" align="center" color="white">{data.data.region.name}</Heading>
+                            <Heading size="md" align="center" color="white">{data.data.region.name}</Heading>
                             </Box>
-                            <Box color="#004492" p={2}>
+                            <Box color="#004492" p={2} pt={1} pb={1}>
                                 <Grid templateColumns="repeat(2, 1fr)" gap={4}>
-                                    <Heading size="md" align="center">Size</Heading>
-                                    <Heading size="md" align="center">Harga</Heading>
+                                    <Heading size="sm" align="center">Size</Heading>
+                                    <Heading size="sm" align="center">Harga</Heading>
                                 </Grid>
                             </Box>
                             </Box>
                             <Box color="white" p={3} style={{backgroundColor: "rgba(0,68,146,0.7)"}}>
-                                <Grid templateColumns="repeat(2, 1fr)" gap={4}>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 100</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_100}</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 90</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_90}</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 80</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_80}</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 70</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_70}</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 60</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_60}</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 50</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_50}</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 40</Heading>
-                                    <Heading size="md" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_40}</Heading>
-                                    <Heading size="md" align="center" >Size 30</Heading>
-                                    <Heading size="md" align="center" >Rp. {data.data.size_30}</Heading>
+                                <Grid templateColumns="repeat(2, 1fr)" gap={3}>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 100</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_100}</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 90</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_90}</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 80</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_80}</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 70</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_70}</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 60</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_60}</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 50</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_50}</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Size 40</Heading>
+                                    <Heading size="sm" align="center" borderBottom="2px" borderColor="orange.400" pb={2}>Rp. {data.data.size_40}</Heading>
+                                    <Heading size="sm" align="center" >Size 30</Heading>
+                                    <Heading size="sm" align="center" >Rp. {data.data.size_30}</Heading>
                                 </Grid>
                             </Box>
-                            <Box p={4} pt={1} color="white" align="center" style={{backgroundColor: "rgba(27,119,223,0.7)"}} borderBottomRadius="15">
-                            <Text fontSize="md" fontWeight={600}>Update harga kami & supplier/bakul udang lainnya di berbagai daerah melalui: </Text>
-                            <Box p={2} style={{backgroundColor: "rgba(249,157,27,1)"}} m={2}>
-                                <Heading size="md" align="center" color="#004492"><Icon as={FaSearch} w={6} h={6} color="#004492"/>{' '}app.jala.tech/harga_udang</Heading></Box>
-                            <Text fontSize="md" fontWeight={600} mt={2} mb={2}>
+                            <Box p={2} pr={4} pl={4} pt={1} color="white" align="center" style={{backgroundColor: "rgba(27,119,223,0.7)"}} borderBottomRadius="15">
+                            <Text fontSize="xs" fontWeight={600}>Update harga kami & supplier/bakul udang lainnya di berbagai daerah melalui: </Text>
+                            <Box p={2} style={{backgroundColor: "rgba(249,157,27,1)"}} m={1}>
+                                <Heading size="sm" align="center" color="#004492"><Icon as={FaSearch} w={5} h={5} color="#004492"/>{' '}app.jala.tech/harga_udang</Heading></Box>
+                            <Text fontSize="sm" fontWeight={600} mt={1} mb={1}>
                             <Icon as={FaLinkedin} w={5} h={5} color="white" mr={1}/>
                             <Icon as={FaFacebook} w={5} h={5} color="white" mr={1}/>
                             <Icon as={FaInstagram} w={5} h={5} color="white" mr={1}/>
                             {data.data.creator.name}</Text>
-                            <Text fontSize="md" fontWeight={600}><Icon as={FaWhatsapp} w={6} h={6} color="white" mr={1}/> {' '}{data.data.creator.phone}</Text>
-                            </Box>
-                            <Box p={4} pt={1} color="white" align="center">
-                            
+                            <Text fontSize="xs" fontWeight={600}><Icon as={FaWhatsapp} w={6} h={6} color="white" mr={1}/> {' '}{data.data.creator.phone}(Aji)</Text>
                             </Box>
                         </Box>
                     </Box>
