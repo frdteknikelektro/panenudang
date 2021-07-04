@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
     Icon,
     Button,
     Drawer,
     Box,
     Text,
+    Image,
     DrawerBody,
     DrawerHeader,
     Grid,
@@ -15,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 import html2canvas from 'html2canvas';
 import PanenUdangImg from '../public/PanenUdangheadwhite.png'
-import Image from 'next/image'
+// import Image from 'next/image'
 import format from 'date-fns/format'
 import {id} from 'date-fns/locale'
 import parseISO from 'date-fns/parseISO'
@@ -27,7 +28,7 @@ import PUStory4 from '../public/pu-bg-4.png'
 import {FaWhatsapp, FaFacebook, FaInstagram, FaLinkedin, FaSearch} from 'react-icons/fa'
 
 export default function StoryModal(data) {
-    // console.log(data)
+    console.log(data)
 
     const bgImages = [PUStory1, PUStory2, PUStory3, PUStory4];
     const randomImage = bgImages[Math.floor(Math.random() * bgImages.length)]
@@ -37,22 +38,44 @@ export default function StoryModal(data) {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
+    
+
 
     // const screenshotTarget = document.body;
+
+    function TakeaScreenshot(){
+
+        setTimeout(()=>{
+            screenshot(), 15000
+        })
 
     function screenshot() {
         const igpost = document.querySelector('#igpost');
         html2canvas(igpost).then(canvas => {
             // igpost.appendChild(canvas)
             const story = canvas.toDataURL('image/jpeg', 1.0)
-            console.log(story)
-            //             const iframe = "<iframe width='100%' height='100%' src='" + story
-            // + "'></iframe>" const x = window.open(); x.document.open();
-            // x.document.write(iframe); x.document.close();
-            window.open('instagram://story-camera')
+            const a = document.createElement('a');
+            const ig = document.createElement('a');
+            document.body.appendChild(ig);
+            document.body.appendChild(a);
+
+            ig.href= "intent://share/#Intent;package=com.instagram.share.ADD_TO_STORY;end"
+            a.href= story;
+            a.download= `${data.data.date_region_full_name}.jpg`
+            a.click();
+            ig.click();
+            
+            document.body.removeChild(a);
+           
+            
+            window.open('instagram://story-camera');
+            onClose()
             // window.location.href = story;
         });
     }
+}
+
+    
 
     const {isOpen, onOpen, onClose} = useDisclosure()
     return (
@@ -65,10 +88,11 @@ export default function StoryModal(data) {
                 colorScheme="purple"
                 onClick={() => {
                 onOpen()
-            }}><Icon as={FaInstagram}/>{' '}
+                TakeaScreenshot()
+            }}><Icon as={FaInstagram} mr={2} />{' '}
                 Share ke Instagram</Button>
 
-            <Drawer onClose={onClose} isOpen={isOpen} size="full">
+            <Drawer onClose={onClose} isOpen={isOpen} size="md">
                 <DrawerOverlay/>
                 <DrawerContent >
                     <Box
@@ -89,7 +113,7 @@ export default function StoryModal(data) {
                                 </Box>
                             </Grid>
                             <Box bgColor="#004492" p={1} pl={4} pr={4} align="center" >
-                                <Image src={PanenUdangImg} width={240} height={55} alt="panen udang"/>
+                                <Image src={PanenUdangImg.src} width={240} height={55} alt="panen udang"/>
                             </Box>
                             <Box style={{backgroundColor: "rgba(249,157,27,0.6)"}} >
                             <Box style={{backgroundColor: "rgba(27,119,223,0.8)"}} p={2} borderBottomRadius="20">
@@ -153,3 +177,5 @@ export default function StoryModal(data) {
         </div>
     )
 }
+
+
