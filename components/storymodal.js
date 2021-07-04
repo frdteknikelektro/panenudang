@@ -46,8 +46,8 @@ export default function StoryModal(data) {
     function TakeaScreenshot(){
 
         setTimeout(()=>{
-            screenshot(), 30000
-        })
+            screenshot()
+        }, 5000)
 
     function screenshot() {
         const igpost = document.querySelector('#igpost');
@@ -55,18 +55,18 @@ export default function StoryModal(data) {
             // igpost.appendChild(canvas)
             const story = canvas.toDataURL('image/jpeg', 1.0)
             const a = document.createElement('a');
-            const ig = document.createElement('a');
-            document.body.appendChild(ig);
+            // const ig = document.createElement('a');
+            // document.body.appendChild(ig);
             document.body.appendChild(a);
 
-            ig.href= "intent://share/#Intent;package=com.instagram.android;end"
+            // ig.href= "intent://share/#Intent;package=com.instagram.android;end"
             a.href= story;
             a.download= `${data.data.date_region_full_name}.jpg`
             a.click();
-            ig.click();
+            // ig.click();
             
             document.body.removeChild(a);
-            document.body.removeChild(ig);
+            // document.body.removeChild(ig);
            
             
             // window.open('instagram://story-camera');
@@ -90,8 +90,8 @@ export default function StoryModal(data) {
                 onClick={() => {
                 onOpen()
                 TakeaScreenshot()
-            }}><Icon as={FaInstagram} mr={2} />{' '}
-                Share ke Instagram</Button>
+            }}><Text mr={2}>📥 </Text>{'  '}
+                Simpan Gambar</Button>
 
             <Drawer onClose={onClose} isOpen={isOpen} size="md">
                 <DrawerOverlay/>
