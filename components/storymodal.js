@@ -46,7 +46,7 @@ export default function StoryModal(data) {
     function TakeaScreenshot(){
 
         setTimeout(()=>{
-            screenshot(), 15000
+            screenshot(), 30000
         })
 
     function screenshot() {
@@ -59,16 +59,17 @@ export default function StoryModal(data) {
             document.body.appendChild(ig);
             document.body.appendChild(a);
 
-            ig.href= "intent://share/#Intent;package=com.instagram.share.ADD_TO_STORY;end"
+            ig.href= "intent://share/#Intent;package=com.instagram.android;end"
             a.href= story;
             a.download= `${data.data.date_region_full_name}.jpg`
             a.click();
             ig.click();
             
             document.body.removeChild(a);
+            document.body.removeChild(ig);
            
             
-            window.open('instagram://story-camera');
+            // window.open('instagram://story-camera');
             onClose()
             // window.location.href = story;
         });
