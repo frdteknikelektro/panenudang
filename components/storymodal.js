@@ -12,7 +12,7 @@ import {
     Heading,
     DrawerOverlay,
     DrawerContent,
-    useDisclosure
+    useDisclosure,
 } from '@chakra-ui/react'
 import html2canvas from 'html2canvas';
 import PanenUdangImg from '../public/PanenUdangheadwhite.png'
@@ -38,20 +38,23 @@ export default function StoryModal(data) {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    
-
-
-    // const screenshotTarget = document.body;
 
     function TakeaScreenshot(){
 
         setTimeout(()=>{
             screenshot()
-        }, 5000)
+        }, 3000)
 
     function screenshot() {
         const igpost = document.querySelector('#igpost');
-        html2canvas(igpost).then(canvas => {
+        // window.scrollTo(0, 0);
+        // console.log('koordinat', getPositi)
+        const {top, left} = igpost.getBoundingClientRect()
+        // console.log(top, left, window.scrollY)
+        html2canvas(igpost,{
+  x: left,
+  y: window.scrollY
+        }).then(canvas => {
             // igpost.appendChild(canvas)
             const story = canvas.toDataURL('image/jpeg', 1.0)
             const a = document.createElement('a');
@@ -93,7 +96,7 @@ export default function StoryModal(data) {
             }}><Text mr={2}>📥 </Text>{'  '}
                 Simpan Gambar</Button>
 
-            <Drawer onClose={onClose} isOpen={isOpen} size="md">
+            <Drawer onClose={onClose} isOpen={isOpen} size="full">
                 <DrawerOverlay/>
                 <DrawerContent >
                     <Box
