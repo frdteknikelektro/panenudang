@@ -191,8 +191,8 @@ export default function TambahData() {
 
     return (
         <div>
-            <Button onClick={onOpen} mb={4} size="lg" colorScheme="orange">
-                Tambah Data
+            <Button onClick={onOpen} isFullWidth mb={4} size="lg" colorScheme="orange">
+                <Text mr={2} >😏 </Text>Mau Buat Harga Baru?
             </Button>
 
             <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="md">
