@@ -132,12 +132,12 @@ export default function LihatData(data) {
                     </Box>
                     <Box p={2} w="xl">
                         <Text fontSize="md" fontWeight="semibold">{data.data.region.full_name}</Text>
-                        <Text fontSize="sm" color="gray.500">{data.data.creator.name} &bull; {format(parseISO(data.data.date), 'dd MMMM yyyy', {locale: id})}</Text>
+                        <Text fontSize="sm" color="gray.500">{data.data.creator.name} &bull; {format(parseISO(data.data.date), 'd MMMM yyyy', {locale: id})}</Text>
                         {/* <Text fontSize="xs" color="gray.500">{data.data.remark}</Text> */}
                     </Box>
                     <Box p={2}  align="right">
                         <Text fontSize="sm" color="gray.500">Size 100</Text>
-                        <Text fontSize="2xl" fontWeight="bold">{data.data.size_100}</Text>
+                        <Text fontSize="2xl" fontWeight="bold" isNumeric>{Intl.NumberFormat('id-ID').format(data.data.size_100)}</Text>
                     </Box>
                 </Stack>
             </Box>
