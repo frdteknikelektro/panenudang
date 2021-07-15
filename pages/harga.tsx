@@ -69,7 +69,7 @@ export default function Harga() {
 
   const { data: dataharga } = response.data;
 
-  //   console.log(data);
+  console.log(dataharga);
 
   return (
     <div>

@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
+import { id as indo } from "date-fns/locale";
 // import { trigger } from "swr";
 
 export default function HapusData(harga) {
@@ -44,7 +45,9 @@ export default function HapusData(harga) {
       title: "Menghapus",
       description: `Menghapus harga ${
         dataharga.data.region.full_name
-      } &bull; ${format(parseISO(dataharga.data.date), "dd MMMM yyyy")}`,
+      } - ${format(parseISO(dataharga.data.date), "d MMMM yyyy", {
+        locale: indo,
+      })}`,
       status: "error",
       duration: 5000,
     });
@@ -77,7 +80,11 @@ export default function HapusData(harga) {
           <AlertDialogHeader>Hapus Data?</AlertDialogHeader>
           <AlertDialogBody>
             Anda yakin ingin menghapus harga {dataharga.data.region.full_name}{" "}
-            &bull; {format(parseISO(dataharga.data.date), "dd MMMM yyyy")} ?
+            &bull;{" "}
+            {format(parseISO(dataharga.data.date), "dd MMMM yyyy", {
+              locale: indo,
+            })}{" "}
+            ?
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button

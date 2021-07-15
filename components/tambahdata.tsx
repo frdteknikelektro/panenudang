@@ -32,7 +32,8 @@ const fetcher = async (
 };
 
 export default function TambahData() {
-  const [provinceName, setProvinceName] = useState("");
+  // const [provinceName, setProvinceName] = useState("");
+  const [provinceId, setProvinceId] = useState("");
 
   const toast = useToast();
 
@@ -67,10 +68,6 @@ export default function TambahData() {
     created_by: number;
     country_id: string;
     currency_id: string;
-  }
-
-  interface ValidationValues {
-    region_id: string;
   }
 
   const listProvinceResponse = useSWR(
@@ -135,7 +132,15 @@ export default function TambahData() {
           "Content-Type": "application/json",
         },
       })
-        .then((response) => response.text())
+        .then((response) => {
+          response.text();
+          toast({
+            title: "Berhasil",
+            description: `Harga baru untuk ${values.region_name[index]} berhasil dibuat`,
+            status: "success",
+            duration: 5000,
+          });
+        })
         // .then(result => console.log(result))
         .catch((error) => {
           toast({
@@ -150,17 +155,9 @@ export default function TambahData() {
     if (values.region_ids.length) {
       // console.log('regions', regions)
       regions.forEach(multipleSend);
-
-      toast({
-        title: "Berhasil",
-        description: `Harga baru untuk ${values.region_name} berhasil dibuat`,
-        status: "success",
-        duration: 5000,
-      });
       trigger(
         `https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`
       );
-      window.location.reload();
     } else {
       // console.log("pilih provinsi");
       toast({
@@ -170,6 +167,9 @@ export default function TambahData() {
         duration: 5000,
       });
     }
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -228,8 +228,10 @@ export default function TambahData() {
     },
   });
 
+  // console.log("province id", provinceId);
   const listRegionResponse = useSWR(
-    `https://app.jala.tech/api/regions?search&sort=&scope=regency&search=${provinceName}&per_page=100`,
+    // `https://app.jala.tech/api/regions?sort=&scope=regency&search=${provinceName}&per_page=100&id=${provinceId}&`,
+    `https://app.jala.tech/api/regions?sort=&scope=regency&province_id__in=${provinceId}&per_page=100`,
     (url) =>
       fetcher(url, {
         headers: {
@@ -242,9 +244,11 @@ export default function TambahData() {
 
   if (listRegionResponse.data) {
     region = listRegionResponse.data.data;
+    // console.log("region", region);
   }
 
   const regionlist = document.getElementById("region-list");
+
   // const provincePicker = document.getElementById("province-picker");
 
   return (
@@ -287,36 +291,35 @@ export default function TambahData() {
               <form onSubmit={formik.handleSubmit}>
                 <div className="form-body">
                   {/* <Stack spacing={4} direction="row"> */}
-                  <Box>
-                    <Text mb={2} color="gray.500" fontWeight={600}>
+                  <Stack direction="column" spacing={3}>
+                    <Text color="gray.500" fontWeight={600}>
                       Tanggal
                     </Text>
                     <Input
-                      mb={2}
                       id="tanggal"
                       name="tanggal"
                       type="date"
                       onChange={formik.handleChange}
                       value={formik.values.date}
                     />
-                    <Text mb={2} color="gray.500" fontWeight={600}>
+                    <Text color="gray.500" fontWeight={600}>
                       Provinsi
                     </Text>
                     <Select
                       id="province-picker"
                       size="md"
-                      mb={2}
-                      value={provinceName}
+                      value={provinceId}
                       onBlur={formik.handleBlur}
                       onChange={(e) => {
-                        setProvinceName(e.target.value);
+                        // setProvinceName(e.target.value);
+                        setProvinceId(e.target.value);
                       }}
                     >
                       <option value="">Pilih Provinsi</option>
                       {province
                         ? province.map((d) => (
                             <option
-                              value={d.name}
+                              value={d.id}
                               // htmlFor={provincePicker}
                               key={d.id}
                             >
@@ -326,28 +329,14 @@ export default function TambahData() {
                         : "Loading"}
                     </Select>
                     {formik.touched.region_id && formik.errors.region_id ? (
-                      <Text
-                        mb={2}
-                        color="red.500"
-                        fontWeight={400}
-                        fontSize="xs"
-                      >
+                      <Text color="red.500" fontWeight={400} fontSize="xs">
                         {formik.errors.region_id}
                       </Text>
                     ) : null}
-                    <Text
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={400}
-                      fontSize="xs"
-                    >
-                      note: sudah bisa pilih region di beda provinsi dalam
-                      sekali kirim!!
-                    </Text>
-                    <Text mb={2} color="gray.500" fontWeight={600}>
+                    <Text color="gray.500" fontWeight={600}>
                       Kota/Kabupaten
                     </Text>
-                    <Box textAlign="left" overflow="scroll">
+                    <Box textAlign="left" overflow="scroll" maxH={500}>
                       <Stack
                         direction="column"
                         spacing={3}
@@ -355,109 +344,112 @@ export default function TambahData() {
                         borderRadius="lg"
                         p={2}
                       >
-                        {region && provinceName !== "" ? (
-                          region.map((d: { id: number; name: {} }) =>
-                            formik.values.region_ids.includes(d.id) ? (
-                              <Checkbox
-                                defaultIsChecked
-                                type="checkbox"
-                                colorScheme="orange"
-                                name="region_id"
-                                id={`region_id ${d.id}`}
-                                onChange={(e) => {
-                                  const cb = document.getElementById(
-                                    `region_id ${d.id}`
-                                  ) as HTMLInputElement;
-                                  if (cb.checked === true) {
-                                    formik.values.region_ids.push(
-                                      e.target.value
-                                    );
-                                    formik.values.region_name.push(d.name);
-                                  } else {
-                                    const index =
-                                      formik.values.region_ids.indexOf(
-                                        e.target.value
-                                      );
-                                    if (index > -1) {
-                                      formik.values.region_ids.splice(index, 1);
-                                      formik.values.region_name.splice(
-                                        index,
-                                        1
-                                      );
-                                    }
-                                  }
-                                  regionlist.innerText = `${formik.values.region_name.join(
-                                    ", "
-                                  )}`;
-                                }}
-                                value={d.id}
-                                key={d.id}
-                              >
-                                {d.name}
-                              </Checkbox>
-                            ) : (
-                              <Checkbox
-                                type="checkbox"
-                                colorScheme="orange"
-                                name="region_id"
-                                id={`region_id ${d.id}`}
-                                onChange={(e) => {
-                                  const cb = document.getElementById(
-                                    `region_id ${d.id}`
-                                  ) as HTMLInputElement;
-                                  if (cb.checked === true) {
-                                    formik.values.region_ids.push(
-                                      e.target.value
-                                    );
-                                    formik.values.region_name.push(d.name);
-                                  } else {
-                                    const index =
-                                      formik.values.region_ids.indexOf(
-                                        e.target.value
-                                      );
-                                    if (index > -1) {
-                                      formik.values.region_ids.splice(index, 1);
-                                      formik.values.region_name.splice(
-                                        index,
-                                        1
-                                      );
-                                    }
-                                  }
-                                  regionlist.innerText = `${formik.values.region_name.join(
-                                    ", "
-                                  )}`;
-                                }}
-                                value={d.id}
-                                key={d.id}
-                              >
-                                {d.name}
-                              </Checkbox>
-                            )
+                        {region && provinceId !== "" ? (
+                          region.map(
+                            (d: {
+                              id: string;
+                              name: string;
+                              regency_id: string;
+                              province_id: string;
+                            }) =>
+                              d.regency_id && d.province_id === provinceId ? (
+                                formik.values.region_ids.includes(d.id) ? (
+                                  <Checkbox
+                                    defaultIsChecked
+                                    type="checkbox"
+                                    colorScheme="orange"
+                                    name="region_id"
+                                    id={`region_id ${d.id}`}
+                                    onChange={(e) => {
+                                      const cb = document.getElementById(
+                                        `region_id ${d.id}`
+                                      ) as HTMLInputElement;
+                                      if (cb.checked === true) {
+                                        formik.values.region_ids.push(
+                                          e.target.value
+                                        );
+                                        formik.values.region_name.push(d.name);
+                                      } else {
+                                        const index =
+                                          formik.values.region_ids.indexOf(
+                                            e.target.value
+                                          );
+                                        if (index > -1) {
+                                          formik.values.region_ids.splice(
+                                            index,
+                                            1
+                                          );
+                                          formik.values.region_name.splice(
+                                            index,
+                                            1
+                                          );
+                                        }
+                                      }
+                                      regionlist.innerText = `${formik.values.region_name.join(
+                                        ", "
+                                      )}`;
+                                    }}
+                                    value={d.id}
+                                    key={d.id}
+                                  >
+                                    {d.name}
+                                  </Checkbox>
+                                ) : (
+                                  <Checkbox
+                                    type="checkbox"
+                                    colorScheme="orange"
+                                    name="region_id"
+                                    id={`region_id ${d.id}`}
+                                    onChange={(e) => {
+                                      const cb = document.getElementById(
+                                        `region_id ${d.id}`
+                                      ) as HTMLInputElement;
+                                      if (cb.checked === true) {
+                                        formik.values.region_ids.push(
+                                          e.target.value
+                                        );
+                                        formik.values.region_name.push(d.name);
+                                      } else {
+                                        const index =
+                                          formik.values.region_ids.indexOf(
+                                            e.target.value
+                                          );
+                                        if (index > -1) {
+                                          formik.values.region_ids.splice(
+                                            index,
+                                            1
+                                          );
+                                          formik.values.region_name.splice(
+                                            index,
+                                            1
+                                          );
+                                        }
+                                      }
+                                      regionlist.innerText = `${formik.values.region_name.join(
+                                        ", "
+                                      )}`;
+                                    }}
+                                    value={d.id}
+                                    key={d.id}
+                                  >
+                                    {d.name}
+                                  </Checkbox>
+                                )
+                              ) : (
+                                ""
+                              )
                           )
                         ) : (
-                          <Text
-                            mb={2}
-                            color="gray.500"
-                            fontWeight={400}
-                            fontSize="sm"
-                          >
+                          <Text color="gray.500" fontWeight={400} fontSize="sm">
                             Pilih Provinsi terlebih dahulu
                           </Text>
                         )}
                       </Stack>
                     </Box>
-                  </Box>
-                  <Box mt={2}>
-                    <Text
-                      htmlFor="size_20"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_20" color="gray.500" fontWeight={600}>
                       Size 20
                     </Text>
                     <Input
-                      mb={2}
                       id="size_20"
                       name="size_20"
                       type="number"
@@ -465,16 +457,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_20}
                     />
-                    <Text
-                      htmlFor="size_30"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_30" color="gray.500" fontWeight={600}>
                       Size 30
                     </Text>
                     <Input
-                      mb={2}
                       id="size_30"
                       name="size_30"
                       type="number"
@@ -482,16 +468,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_30}
                     />
-                    <Text
-                      htmlFor="size_40"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_40" color="gray.500" fontWeight={600}>
                       Size 40
                     </Text>
                     <Input
-                      mb={2}
                       id="size_40"
                       name="size_40"
                       type="number"
@@ -499,16 +479,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_40}
                     />
-                    <Text
-                      htmlFor="size_50"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_50" color="gray.500" fontWeight={600}>
                       Size 50
                     </Text>
                     <Input
-                      mb={2}
                       id="size_50"
                       name="size_50"
                       type="number"
@@ -516,16 +490,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_50}
                     />
-                    <Text
-                      htmlFor="size_60"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_60" color="gray.500" fontWeight={600}>
                       Size 60
                     </Text>
                     <Input
-                      mb={2}
                       id="size_60"
                       name="size_60"
                       type="number"
@@ -533,16 +501,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_60}
                     />
-                    <Text
-                      htmlFor="size_70"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_70" color="gray.500" fontWeight={600}>
                       Size 70
                     </Text>
                     <Input
-                      mb={2}
                       id="size_70"
                       name="size_70"
                       type="number"
@@ -550,16 +512,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_70}
                     />
-                    <Text
-                      htmlFor="size_80"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_80" color="gray.500" fontWeight={600}>
                       Size 80
                     </Text>
                     <Input
-                      mb={2}
                       id="size_80"
                       name="size_80"
                       type="number"
@@ -567,16 +523,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_80}
                     />
-                    <Text
-                      htmlFor="size_90"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_90" color="gray.500" fontWeight={600}>
                       Size 90
                     </Text>
                     <Input
-                      mb={2}
                       id="size_90"
                       name="size_90"
                       type="number"
@@ -584,18 +534,14 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_90}
                     />
-                  </Box>
-                  <Box>
                     <Text
                       htmlFor="size_100"
-                      mb={2}
                       color="orange.500"
                       fontWeight={800}
                     >
                       Size 100 *wajib diisi{" "}
                     </Text>
                     <Input
-                      mb={2}
                       id="size_100"
                       name="size_100"
                       type="number"
@@ -605,25 +551,14 @@ export default function TambahData() {
                       value={formik.values.size_100}
                     />{" "}
                     {formik.touched.size_100 && formik.errors.size_100 ? (
-                      <Text
-                        mb={2}
-                        color="red.500"
-                        fontWeight={400}
-                        fontSize="xs"
-                      >
+                      <Text color="red.500" fontWeight={400} fontSize="xs">
                         {formik.errors.size_100}
                       </Text>
                     ) : null}
-                    <Text
-                      htmlFor="size_110"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_110" color="gray.500" fontWeight={600}>
                       Size 110
                     </Text>
                     <Input
-                      mb={2}
                       id="size_110"
                       name="size_110"
                       type="number"
@@ -631,16 +566,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_110}
                     />
-                    <Text
-                      htmlFor="size_120"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_120" color="gray.500" fontWeight={600}>
                       Size 120
                     </Text>
                     <Input
-                      mb={2}
                       id="size_120"
                       name="size_120"
                       type="number"
@@ -648,16 +577,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_120}
                     />
-                    <Text
-                      htmlFor="size_130"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_130" color="gray.500" fontWeight={600}>
                       Size 130
                     </Text>
                     <Input
-                      mb={2}
                       id="size_130"
                       name="size_130"
                       type="number"
@@ -665,16 +588,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_130}
                     />
-                    <Text
-                      htmlFor="size_140"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_140" color="gray.500" fontWeight={600}>
                       Size 140
                     </Text>
                     <Input
-                      mb={2}
                       id="size_140"
                       name="size_140"
                       type="number"
@@ -682,16 +599,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_140}
                     />
-                    <Text
-                      htmlFor="size_150"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="size_150" color="gray.500" fontWeight={600}>
                       Size 150
                     </Text>
                     <Input
-                      mb={2}
                       id="size_150"
                       name="size_150"
                       type="number"
@@ -699,16 +610,10 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.size_150}
                     />
-                    <Text
-                      htmlFor="remark"
-                      mb={2}
-                      color="gray.500"
-                      fontWeight={600}
-                    >
+                    <Text htmlFor="remark" color="gray.500" fontWeight={600}>
                       Catatan
                     </Text>
                     <Textarea
-                      mb={2}
                       rows={2}
                       id="remark"
                       name="remark"
@@ -717,10 +622,9 @@ export default function TambahData() {
                       onChange={formik.handleChange}
                       value={formik.values.remark}
                     />
-                  </Box>
+                  </Stack>
                 </div>
                 <Button
-                  mb={2}
                   mt={2}
                   isFullWidth
                   colorScheme="orange"
