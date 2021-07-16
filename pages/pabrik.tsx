@@ -20,14 +20,24 @@ import {
   InputLeftAddon,
   InputRightAddon,
   Button,
+  Icon,
   useToast,
+  As,
+  InputProps,
+  OmitCommonProps,
 } from "@chakra-ui/react";
+import { PlusSquareIcon, SmallCloseIcon } from "@chakra-ui/icons";
 
 import { motion } from "framer-motion";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import parseISO from "date-fns/parseISO";
-import { id } from "date-fns/locale";
-import { useFormik, FormikErrors } from "formik";
+import {
+  Formik,
+  Field,
+  Form,
+  ErrorMessage,
+  FieldArray,
+  useField,
+  FormikProps,
+} from "formik";
 import PengaturanPabrik from "../components/pengaturanpabrik";
 // import PanenUdangImg from "../public/PanenUdanghead.png";
 import PanenUdangLogo from "../public/pulogo.png";
@@ -42,27 +52,10 @@ const fetcher = async (
 };
 
 export default function Pabrik() {
-  // interface PabrikFields {
-  //   full_name: string;
-  //   last_update: string;
-  //   initial_name: string;
-  //   percent_size: number;
-  //   percent_ton: number;
-  //   size_20: number;
-  //   size_30: number;
-  //   size_40: number;
-  //   size_50: number;
-  //   size_60: number;
-  //   size_70: number;
-  //   size_80: number;
-  //   size_90: number;
-  //   size_100: number;
-  //   size_110: number;
-  //   size_120: number;
-  //   size_130: number;
-  //   size_140: number;
-  //   size_150: number;
-  // }
+  interface Values {
+    size: number;
+    tonase: number;
+  }
 
   const response = useSWR(
     `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${process.env.AIRTABLE_TABLE}`,
@@ -102,12 +95,44 @@ export default function Pabrik() {
 
   const { records: datapabrik } = response.data;
 
+  const initialValues = {
+    panen: [
+      {
+        size: "",
+        tonase: "",
+      },
+    ],
+  };
+
+  // eslint-disable-next-line react/prop-types
+  function PanenInput(
+    props: JSX.IntrinsicAttributes &
+      OmitCommonProps<
+        React.DetailedHTMLProps<
+          React.InputHTMLAttributes<HTMLInputElement>,
+          HTMLInputElement
+        >,
+        keyof InputProps
+      > &
+      InputProps &
+      OmitCommonProps<any, keyof InputProps> & { as?: As<any> }
+  ): JSX.Element {
+    const [field, meta, helpers] = useField(props.name);
+    return (
+      <>
+        <Input {...field} {...props} />
+      </>
+    );
+  }
+
+  // const formPanen = document.getElementById("panenform");
+
   return (
     <div>
       <Head>
-        <title>Harga Udang | Pengaturan Pabrik</title>
+        <title>Harga Udang | Bongkar Di mana?</title>
       </Head>
-      <Container w="100vw" maxW="xl" pt="8" pb="8">
+      <Container w="100vw" maxW="xl" pt="4" pb="8">
         <Box>
           <Box alignContent="right">
             <PengaturanPabrik dataPabrik={datapabrik} />
@@ -117,8 +142,103 @@ export default function Pabrik() {
               Kirim ke Mana?
             </Heading>
           </Box>
+          <Divider mb={4} />
 
-          <Divider mb={8} />
+          <Box>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={async (values) => {
+                await new Promise((r) => setTimeout(r, 500));
+                alert(JSON.stringify(values, null, 2));
+              }}
+            >
+              {({ values }) => (
+                <Form>
+                  <FieldArray name="panen">
+                    {({ insert, remove, push }) => (
+                      <Stack direction="column" spacing={4} id="panenform">
+                        <Button
+                          leftIcon={<PlusSquareIcon />}
+                          onClick={() => push({ size: 0, tonase: 0 })}
+                          isFullWidth
+                          mb={4}
+                          size="md"
+                          colorScheme="pink"
+                        >
+                          Tambah Size Panen
+                        </Button>
+                        {values.panen.length > 0 &&
+                          values.panen.map((p, index) => (
+                            <Stack direction="column" spacing={2} key={index}>
+                              <Stack direction="row" spacing={4}>
+                                <Text as="h4" fontSize="md" fontWeight={600}>
+                                  Size {index + 1}
+                                </Text>
+                                <Button
+                                  leftIcon={<SmallCloseIcon />}
+                                  onClick={() => remove(index)}
+                                  mb={4}
+                                  size="xs"
+                                  colorScheme="red"
+                                  borderRadius="15"
+                                >
+                                  Hapus
+                                </Button>
+                              </Stack>
+                              <InputGroup size="sm">
+                                <InputLeftAddon
+                                  color="gray.500"
+                                  htmlFor={`panen.${index}.size`}
+                                  fontWeight={500}
+                                  width="30%"
+                                >
+                                  Size
+                                </InputLeftAddon>
+                                <PanenInput
+                                  name={`panen.${index}.size`}
+                                  type="number"
+                                  placeholder="ekor/kg"
+                                />
+                              </InputGroup>
+                              <InputGroup size="sm">
+                                <InputLeftAddon
+                                  color="gray.500"
+                                  htmlFor={`panen.${index}.tonase`}
+                                  fontWeight={500}
+                                  width="30%"
+                                >
+                                  Tonase
+                                </InputLeftAddon>
+                                <PanenInput
+                                  name={`panen.${index}.tonase`}
+                                  type="number"
+                                  placeholder="dalam kg"
+                                />
+                                <InputRightAddon
+                                  color="gray.500"
+                                  fontWeight={600}
+                                >
+                                  kg
+                                </InputRightAddon>
+                              </InputGroup>
+                            </Stack>
+                          ))}
+                      </Stack>
+                    )}
+                  </FieldArray>
+                  <Button
+                    type="submit"
+                    isFullWidth
+                    mt={4}
+                    size="md"
+                    colorScheme="twitter"
+                  >
+                    Cari Pabrik
+                  </Button>
+                </Form>
+              )}
+            </Formik>
+          </Box>
         </Box>
       </Container>
     </div>

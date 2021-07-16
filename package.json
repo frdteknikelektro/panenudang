@@ -13,6 +13,7 @@
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "format": "prettier --write .",
     "test-all": "yarn check-format && yarn check-lint && yarn check-types && yarn build",
+    "validate": "yarn check-format && yarn check-lint && yarn check-types",
     "prepare": "husky install"
   },
   "dependencies": {
