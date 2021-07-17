@@ -125,109 +125,125 @@ export default function Pabrik() {
     );
   }
 
-  function hitungHargaPabrik(values, data) {
-    console.log("values", values.panen[0].size, "data pabrik", data);
-    let hargaSize: number;
-    for (let i = 0; i < values.panen.length; i++) {
-      if (values.panen[i].size < 30) {
+  function hitungHargaPabrik(values, data, hargaPabrik, semuaPabrik) {
+    // console.log("values", values.panen[0].size, "data pabrik", data);
+    // console.log("harga pabrik", hargaPabrik);
+    // let hargaSize: number;
+
+    function hitungHargaSize(i, k, hargaSize) {
+      if (values.panen[k].size < 30) {
         hargaSize =
-          (30 - values.panen[i].size) *
-            ((data[0].fields.size_20 - data[0].fields.size_30) * 0.1) +
-          data[0].fields.size_30;
-        return hargaSize;
+          (30 - values.panen[k].size) *
+            ((data[i].fields.size_20 - data[i].fields.size_30) * 0.1) +
+          data[i].fields.size_30;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 40) {
+      if (values.panen[k].size < 40) {
         hargaSize =
-          (40 - values.panen[i].size) *
-            ((data[0].fields.size_30 - data[0].fields.size_40) * 0.1) +
-          data[0].fields.size_40;
-        return hargaSize;
+          (40 - values.panen[k].size) *
+            ((data[i].fields.size_30 - data[i].fields.size_40) * 0.1) +
+          data[i].fields.size_40;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 50) {
+      if (values.panen[k].size < 50) {
         hargaSize =
-          (50 - values.panen[i].size) *
-            ((data[0].fields.size_40 - data[0].fields.size_50) * 0.1) +
-          data[0].fields.size_50;
-        return hargaSize;
+          (50 - values.panen[k].size) *
+            ((data[i].fields.size_40 - data[i].fields.size_50) * 0.1) +
+          data[i].fields.size_50;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 60) {
+      if (values.panen[k].size < 60) {
         hargaSize =
-          (60 - values.panen[i].size) *
-            ((data[0].fields.size_50 - data[0].fields.size_60) * 0.1) +
-          data[0].fields.size_60;
-        return hargaSize;
+          (60 - values.panen[k].size) *
+            ((data[i].fields.size_50 - data[i].fields.size_60) * 0.1) +
+          data[i].fields.size_60;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 70) {
+      if (values.panen[k].size < 70) {
         hargaSize =
-          (70 - values.panen[i].size) *
-            ((data[0].fields.size_60 - data[0].fields.size_70) * 0.1) +
-          data[0].fields.size_70;
-        return hargaSize;
+          (70 - values.panen[k].size) *
+            ((data[i].fields.size_60 - data[i].fields.size_70) * 0.1) +
+          data[i].fields.size_70;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 80) {
+      if (values.panen[k].size < 80) {
         hargaSize =
-          (80 - values.panen[i].size) *
-            ((data[0].fields.size_70 - data[0].fields.size_80) * 0.1) +
-          data[0].fields.size_80;
-        return hargaSize;
+          (80 - values.panen[k].size) *
+            ((data[i].fields.size_70 - data[i].fields.size_80) * 0.1) +
+          data[i].fields.size_80;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 90) {
+      if (values.panen[k].size < 90) {
         hargaSize =
-          (90 - values.panen[i].size) *
-            ((data[0].fields.size_80 - data[0].fields.size_90) * 0.1) +
-          data[0].fields.size_90;
-        return hargaSize;
+          (90 - values.panen[k].size) *
+            ((data[i].fields.size_80 - data[i].fields.size_90) * 0.1) +
+          data[i].fields.size_90;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 100) {
+      if (values.panen[k].size < 100) {
         hargaSize =
-          (100 - values.panen[i].size) *
-            ((data[0].fields.size_90 - data[0].fields.size_100) * 0.1) +
-          data[0].fields.size_100;
-        // console.log("harga baru", hargaSize);
-        return hargaSize;
+          (100 - values.panen[k].size) *
+            ((data[i].fields.size_90 - data[i].fields.size_100) * 0.1) +
+          data[i].fields.size_100;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 110) {
+      if (values.panen[k].size < 110) {
         hargaSize =
-          (110 - values.panen[i].size) *
-            ((data[0].fields.size_100 - data[0].fields.size_110) * 0.1) +
-          data[0].fields.size_110;
-        return hargaSize;
+          (110 - values.panen[k].size) *
+            ((data[i].fields.size_100 - data[i].fields.size_110) * 0.1) +
+          data[i].fields.size_110;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 120) {
+      if (values.panen[k].size < 120) {
         hargaSize =
-          (120 - values.panen[i].size) *
-            ((data[0].fields.size_110 - data[0].fields.size_120) * 0.1) +
-          data[0].fields.size_120;
-        return hargaSize;
+          (120 - values.panen[k].size) *
+            ((data[i].fields.size_110 - data[i].fields.size_120) * 0.1) +
+          data[i].fields.size_120;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 130) {
+      if (values.panen[k].size < 130) {
         hargaSize =
-          (130 - values.panen[i].size) *
-            ((data[0].fields.size_120 - data[0].fields.size_130) * 0.1) +
-          data[0].fields.size_130;
-        return hargaSize;
+          (130 - values.panen[k].size) *
+            ((data[i].fields.size_120 - data[i].fields.size_130) * 0.1) +
+          data[i].fields.size_130;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 140) {
+      if (values.panen[k].size < 140) {
         hargaSize =
-          (140 - values.panen[i].size) *
-            ((data[0].fields.size_130 - data[0].fields.size_140) * 0.1) +
-          data[0].fields.size_140;
-        return hargaSize;
+          (140 - values.panen[k].size) *
+            ((data[i].fields.size_130 - data[i].fields.size_140) * 0.1) +
+          data[i].fields.size_140;
+        return hargaSize * values.panen[k].tonase;
       }
-      if (values.panen[i].size < 150) {
+      if (values.panen[k].size < 150) {
         hargaSize =
-          (150 - values.panen[i].size) *
-            ((data[0].fields.size_140 - data[0].fields.size_150) * 0.1) +
-          data[0].fields.size_150;
-        return hargaSize;
+          (150 - values.panen[k].size) *
+            ((data[i].fields.size_140 - data[i].fields.size_150) * 0.1) +
+          data[i].fields.size_150;
+        return hargaSize * values.panen[k].tonase;
       }
     }
-    console.log("harga baru", hargaSize);
+
+    for (let i = 0; i < data.length; i++) {
+      let hargaSize: number;
+      let multiHarga: number[] = [];
+      for (let k = 0; k < values.panen.length; k++) {
+        multiHarga.push(hitungHargaSize(i, k, hargaSize));
+        // console.log(`loop ${i} ${k}`, multiHarga);
+      }
+      let totalHarga: number = multiHarga.reduce((a, b) => {
+        return a + b;
+      }, 0);
+      semuaPabrik.push({
+        id: data[i].id,
+        pabrik: data[i].fields.full_name,
+        initial: data[i].fields.initial_name,
+        harga: multiHarga,
+        total: totalHarga,
+      });
+      // console.log(`loop luar ${i}`, multiHarga);
+    }
   }
-
-  // const hargaPabrik = () => hitungHargaPabrik
-
-  // const formPanen = document.getElementById("panenform");
 
   return (
     <div>
@@ -250,9 +266,19 @@ export default function Pabrik() {
             <Formik
               initialValues={initialValues}
               onSubmit={async (values) => {
+                let hargaPabrik: any[] = [];
+                let semuaPabrik: any[] = [];
                 await new Promise((r) => setTimeout(r, 500));
                 // alert(JSON.stringify(values, null, 2));
-                console.log(hitungHargaPabrik(values, datapabrik));
+                console.log(
+                  hitungHargaPabrik(
+                    values,
+                    datapabrik,
+                    hargaPabrik,
+                    semuaPabrik
+                  )
+                );
+                console.log("semua pabrik multi size", semuaPabrik);
               }}
             >
               {({ values }) => (
@@ -262,7 +288,7 @@ export default function Pabrik() {
                       <Stack direction="column" spacing={4} id="panenform">
                         <Button
                           leftIcon={<PlusSquareIcon />}
-                          onClick={() => push({ size: 0, tonase: 0 })}
+                          onClick={() => push({ size: "", tonase: "" })}
                           isFullWidth
                           mb={4}
                           size="md"
