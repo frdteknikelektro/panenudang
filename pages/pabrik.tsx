@@ -125,6 +125,108 @@ export default function Pabrik() {
     );
   }
 
+  function hitungHargaPabrik(values, data) {
+    console.log("values", values.panen[0].size, "data pabrik", data);
+    let hargaSize: number;
+    for (let i = 0; i < values.panen.length; i++) {
+      if (values.panen[i].size < 30) {
+        hargaSize =
+          (30 - values.panen[i].size) *
+            ((data[0].fields.size_20 - data[0].fields.size_30) * 0.1) +
+          data[0].fields.size_30;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 40) {
+        hargaSize =
+          (40 - values.panen[i].size) *
+            ((data[0].fields.size_30 - data[0].fields.size_40) * 0.1) +
+          data[0].fields.size_40;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 50) {
+        hargaSize =
+          (50 - values.panen[i].size) *
+            ((data[0].fields.size_40 - data[0].fields.size_50) * 0.1) +
+          data[0].fields.size_50;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 60) {
+        hargaSize =
+          (60 - values.panen[i].size) *
+            ((data[0].fields.size_50 - data[0].fields.size_60) * 0.1) +
+          data[0].fields.size_60;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 70) {
+        hargaSize =
+          (70 - values.panen[i].size) *
+            ((data[0].fields.size_60 - data[0].fields.size_70) * 0.1) +
+          data[0].fields.size_70;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 80) {
+        hargaSize =
+          (80 - values.panen[i].size) *
+            ((data[0].fields.size_70 - data[0].fields.size_80) * 0.1) +
+          data[0].fields.size_80;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 90) {
+        hargaSize =
+          (90 - values.panen[i].size) *
+            ((data[0].fields.size_80 - data[0].fields.size_90) * 0.1) +
+          data[0].fields.size_90;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 100) {
+        hargaSize =
+          (100 - values.panen[i].size) *
+            ((data[0].fields.size_90 - data[0].fields.size_100) * 0.1) +
+          data[0].fields.size_100;
+        // console.log("harga baru", hargaSize);
+        return hargaSize;
+      }
+      if (values.panen[i].size < 110) {
+        hargaSize =
+          (110 - values.panen[i].size) *
+            ((data[0].fields.size_100 - data[0].fields.size_110) * 0.1) +
+          data[0].fields.size_110;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 120) {
+        hargaSize =
+          (120 - values.panen[i].size) *
+            ((data[0].fields.size_110 - data[0].fields.size_120) * 0.1) +
+          data[0].fields.size_120;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 130) {
+        hargaSize =
+          (130 - values.panen[i].size) *
+            ((data[0].fields.size_120 - data[0].fields.size_130) * 0.1) +
+          data[0].fields.size_130;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 140) {
+        hargaSize =
+          (140 - values.panen[i].size) *
+            ((data[0].fields.size_130 - data[0].fields.size_140) * 0.1) +
+          data[0].fields.size_140;
+        return hargaSize;
+      }
+      if (values.panen[i].size < 150) {
+        hargaSize =
+          (150 - values.panen[i].size) *
+            ((data[0].fields.size_140 - data[0].fields.size_150) * 0.1) +
+          data[0].fields.size_150;
+        return hargaSize;
+      }
+    }
+    console.log("harga baru", hargaSize);
+  }
+
+  // const hargaPabrik = () => hitungHargaPabrik
+
   // const formPanen = document.getElementById("panenform");
 
   return (
@@ -149,7 +251,8 @@ export default function Pabrik() {
               initialValues={initialValues}
               onSubmit={async (values) => {
                 await new Promise((r) => setTimeout(r, 500));
-                alert(JSON.stringify(values, null, 2));
+                // alert(JSON.stringify(values, null, 2));
+                console.log(hitungHargaPabrik(values, datapabrik));
               }}
             >
               {({ values }) => (
