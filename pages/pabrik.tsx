@@ -118,98 +118,232 @@ export default function Pabrik() {
     );
   }
 
+  // function hitungHargaPabrik(values, data, semuaPabrik) {
+  //   console.log("data size tonase", values, "datapabrik", data);
+  //   function hitungHargaSize(i, k, hargaSize) {
+  //     let naikSize: number = 0;
+  //     let naikTon: number = 0;
+  //     naikSize =
+  //       values.panen[k].size -
+  //       values.panen[k].size * _.divide(data[i].fields.percent_size, 100);
+  //     naikTon =
+  //       values.panen[k].tonase +
+  //       values.panen[k].tonase * _.divide(data[i].fields.percent_ton, 100);
+
+  //     if (values.panen[k].size < 30) {
+  //       hargaSize =
+  //         (30 - values.panen[k].size) *
+  //           ((data[i].fields.size_20 - data[i].fields.size_30) * 0.1) +
+  //         data[i].fields.size_30;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 40) {
+  //       hargaSize =
+  //         (40 - values.panen[k].size) *
+  //           ((data[i].fields.size_30 - data[i].fields.size_40) * 0.1) +
+  //         data[i].fields.size_40;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 50) {
+  //       hargaSize =
+  //         (50 - values.panen[k].size) *
+  //           ((data[i].fields.size_40 - data[i].fields.size_50) * 0.1) +
+  //         data[i].fields.size_50;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 60) {
+  //       hargaSize =
+  //         (60 - values.panen[k].size) *
+  //           ((data[i].fields.size_50 - data[i].fields.size_60) * 0.1) +
+  //         data[i].fields.size_60;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 70) {
+  //       hargaSize =
+  //         (70 - values.panen[k].size) *
+  //           ((data[i].fields.size_60 - data[i].fields.size_70) * 0.1) +
+  //         data[i].fields.size_70;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 80) {
+  //       hargaSize =
+  //         (80 - values.panen[k].size) *
+  //           ((data[i].fields.size_70 - data[i].fields.size_80) * 0.1) +
+  //         data[i].fields.size_80;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 90) {
+  //       hargaSize =
+  //         (90 - values.panen[k].size) *
+  //           ((data[i].fields.size_80 - data[i].fields.size_90) * 0.1) +
+  //         data[i].fields.size_90;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 100) {
+  //       hargaSize =
+  //         (100 - values.panen[k].size) *
+  //           ((data[i].fields.size_90 - data[i].fields.size_100) * 0.1) +
+  //         data[i].fields.size_100;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 110) {
+  //       hargaSize =
+  //         (110 - values.panen[k].size) *
+  //           ((data[i].fields.size_100 - data[i].fields.size_110) * 0.1) +
+  //         data[i].fields.size_110;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 120) {
+  //       hargaSize =
+  //         (120 - values.panen[k].size) *
+  //           ((data[i].fields.size_110 - data[i].fields.size_120) * 0.1) +
+  //         data[i].fields.size_120;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 130) {
+  //       hargaSize =
+  //         (130 - values.panen[k].size) *
+  //           ((data[i].fields.size_120 - data[i].fields.size_130) * 0.1) +
+  //         data[i].fields.size_130;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 140) {
+  //       hargaSize =
+  //         (140 - values.panen[k].size) *
+  //           ((data[i].fields.size_130 - data[i].fields.size_140) * 0.1) +
+  //         data[i].fields.size_140;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //     if (values.panen[k].size < 150) {
+  //       hargaSize =
+  //         (150 - values.panen[k].size) *
+  //           ((data[i].fields.size_140 - data[i].fields.size_150) * 0.1) +
+  //         data[i].fields.size_150;
+  //       return hargaSize * values.panen[k].tonase;
+  //     }
+  //   }
+
+  //   for (let i = 0; i < data.length; i++) {
+  //     let hargaSize: number;
+  //     let multiHarga: number[] = [];
+  //     for (let k = 0; k < values.panen.length; k++) {
+  //       multiHarga.push(hitungHargaSize(i, k, hargaSize));
+  //       console.log(`loop dalam ${i} ${k}`, multiHarga);
+  //     }
+  //     semuaPabrik.push({
+  //       id: data[i].id,
+  //       pabrik: data[i].fields.full_name,
+  //       initial: data[i].fields.initial_name,
+  //       harga: multiHarga,
+  //       total: _.sum(multiHarga),
+  //     });
+  //     console.log("loop luar", multiHarga);
+  //   }
+  // }
+
   function hitungHargaPabrik(values, data, semuaPabrik) {
+    console.log("data size tonase", values, "datapabrik", data);
     function hitungHargaSize(i, k, hargaSize) {
-      if (values.panen[k].size < 30) {
+      let naikSize: number = 0;
+      let naikTon: number = 0;
+      //naikin size dan tonase
+      naikSize =
+        values.panen[k].size -
+        values.panen[k].size * _.divide(data[i].fields.percent_size, 100);
+      naikTon =
+        values.panen[k].tonase +
+        values.panen[k].tonase * _.divide(data[i].fields.percent_ton, 100);
+
+      if (naikSize < 30) {
         hargaSize =
-          (30 - values.panen[k].size) *
+          (30 - naikSize) *
             ((data[i].fields.size_20 - data[i].fields.size_30) * 0.1) +
           data[i].fields.size_30;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 40) {
+      if (naikSize < 40) {
         hargaSize =
-          (40 - values.panen[k].size) *
+          (40 - naikSize) *
             ((data[i].fields.size_30 - data[i].fields.size_40) * 0.1) +
           data[i].fields.size_40;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 50) {
+      if (naikSize < 50) {
         hargaSize =
-          (50 - values.panen[k].size) *
+          (50 - naikSize) *
             ((data[i].fields.size_40 - data[i].fields.size_50) * 0.1) +
           data[i].fields.size_50;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 60) {
+      if (naikSize < 60) {
         hargaSize =
-          (60 - values.panen[k].size) *
+          (60 - naikSize) *
             ((data[i].fields.size_50 - data[i].fields.size_60) * 0.1) +
           data[i].fields.size_60;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 70) {
+      if (naikSize < 70) {
         hargaSize =
-          (70 - values.panen[k].size) *
+          (70 - naikSize) *
             ((data[i].fields.size_60 - data[i].fields.size_70) * 0.1) +
           data[i].fields.size_70;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 80) {
+      if (naikSize < 80) {
         hargaSize =
-          (80 - values.panen[k].size) *
+          (80 - naikSize) *
             ((data[i].fields.size_70 - data[i].fields.size_80) * 0.1) +
           data[i].fields.size_80;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 90) {
+      if (naikSize < 90) {
         hargaSize =
-          (90 - values.panen[k].size) *
+          (90 - naikSize) *
             ((data[i].fields.size_80 - data[i].fields.size_90) * 0.1) +
           data[i].fields.size_90;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 100) {
+      if (naikSize < 100) {
         hargaSize =
-          (100 - values.panen[k].size) *
+          (100 - naikSize) *
             ((data[i].fields.size_90 - data[i].fields.size_100) * 0.1) +
           data[i].fields.size_100;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 110) {
+      if (naikSize < 110) {
         hargaSize =
-          (110 - values.panen[k].size) *
+          (110 - naikSize) *
             ((data[i].fields.size_100 - data[i].fields.size_110) * 0.1) +
           data[i].fields.size_110;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 120) {
+      if (naikSize < 120) {
         hargaSize =
-          (120 - values.panen[k].size) *
+          (120 - naikSize) *
             ((data[i].fields.size_110 - data[i].fields.size_120) * 0.1) +
           data[i].fields.size_120;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 130) {
+      if (naikSize < 130) {
         hargaSize =
-          (130 - values.panen[k].size) *
+          (130 - naikSize) *
             ((data[i].fields.size_120 - data[i].fields.size_130) * 0.1) +
           data[i].fields.size_130;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 140) {
+      if (naikSize < 140) {
         hargaSize =
-          (140 - values.panen[k].size) *
+          (140 - naikSize) *
             ((data[i].fields.size_130 - data[i].fields.size_140) * 0.1) +
           data[i].fields.size_140;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
-      if (values.panen[k].size < 150) {
+      if (naikSize < 150) {
         hargaSize =
-          (150 - values.panen[k].size) *
+          (150 - naikSize) *
             ((data[i].fields.size_140 - data[i].fields.size_150) * 0.1) +
           data[i].fields.size_150;
-        return hargaSize * values.panen[k].tonase;
+        return _.round(hargaSize * naikTon);
       }
     }
 
@@ -218,6 +352,7 @@ export default function Pabrik() {
       let multiHarga: number[] = [];
       for (let k = 0; k < values.panen.length; k++) {
         multiHarga.push(hitungHargaSize(i, k, hargaSize));
+        // console.log(`loop dalam ${i} ${k}`, multiHarga);
       }
       semuaPabrik.push({
         id: data[i].id,
@@ -226,7 +361,7 @@ export default function Pabrik() {
         harga: multiHarga,
         total: _.sum(multiHarga),
       });
-      // console.log(`loop luar ${i}`, multiHarga);
+      // console.log("loop luar", multiHarga);
     }
   }
 
@@ -253,7 +388,6 @@ export default function Pabrik() {
               onSubmit={async (values) => {
                 let semuaPabrik: any[] = [];
                 await new Promise((r) => setTimeout(r, 500));
-                // alert(JSON.stringify(values, null, 2));
                 hitungHargaPabrik(values, datapabrik, semuaPabrik);
                 console.log("semua pabrik multi size", semuaPabrik);
                 console.log(
