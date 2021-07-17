@@ -384,25 +384,6 @@ export default function PabrikTabPanel(detailPabrik) {
               </InputGroup>
               <InputGroup size="sm">
                 <InputLeftAddon
-                  htmlFor="size_20"
-                  color="gray.500"
-                  fontWeight={600}
-                  width="40%"
-                >
-                  Size 20
-                </InputLeftAddon>
-                <Input
-                  id="size_20"
-                  name="size_20"
-                  type="number"
-                  placeholder="Dalam Rp"
-                  onChange={formik.handleChange}
-                  value={formik.values.size_20}
-                />
-              </InputGroup>
-
-              <InputGroup size="sm">
-                <InputLeftAddon
                   htmlFor="size_30"
                   color="gray.500"
                   fontWeight={600}
@@ -417,6 +398,24 @@ export default function PabrikTabPanel(detailPabrik) {
                   placeholder="Dalam Rp"
                   onChange={formik.handleChange}
                   value={formik.values.size_30}
+                />
+              </InputGroup>
+              <InputGroup size="sm">
+                <InputLeftAddon
+                  htmlFor="size_20"
+                  color="gray.500"
+                  fontWeight={600}
+                  width="40%"
+                >
+                  Size 20
+                </InputLeftAddon>
+                <Input
+                  id="size_20"
+                  name="size_20"
+                  type="number"
+                  placeholder="Dalam Rp"
+                  onChange={formik.handleChange}
+                  value={formik.values.size_20}
                 />
               </InputGroup>
             </Stack>
