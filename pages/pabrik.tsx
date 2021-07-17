@@ -9,24 +9,18 @@ import {
   Heading,
   Box,
   Flex,
-  Tabs,
   Text,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
   Input,
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
   Button,
-  Icon,
-  useToast,
   As,
   InputProps,
   OmitCommonProps,
 } from "@chakra-ui/react";
 import { PlusSquareIcon, SmallCloseIcon } from "@chakra-ui/icons";
+import _ from "lodash";
 
 import { motion } from "framer-motion";
 import {
@@ -36,7 +30,6 @@ import {
   ErrorMessage,
   FieldArray,
   useField,
-  FormikProps,
 } from "formik";
 import PengaturanPabrik from "../components/pengaturanpabrik";
 // import PanenUdangImg from "../public/PanenUdanghead.png";
@@ -125,11 +118,7 @@ export default function Pabrik() {
     );
   }
 
-  function hitungHargaPabrik(values, data, hargaPabrik, semuaPabrik) {
-    // console.log("values", values.panen[0].size, "data pabrik", data);
-    // console.log("harga pabrik", hargaPabrik);
-    // let hargaSize: number;
-
+  function hitungHargaPabrik(values, data, semuaPabrik) {
     function hitungHargaSize(i, k, hargaSize) {
       if (values.panen[k].size < 30) {
         hargaSize =
@@ -229,17 +218,13 @@ export default function Pabrik() {
       let multiHarga: number[] = [];
       for (let k = 0; k < values.panen.length; k++) {
         multiHarga.push(hitungHargaSize(i, k, hargaSize));
-        // console.log(`loop ${i} ${k}`, multiHarga);
       }
-      let totalHarga: number = multiHarga.reduce((a, b) => {
-        return a + b;
-      }, 0);
       semuaPabrik.push({
         id: data[i].id,
         pabrik: data[i].fields.full_name,
         initial: data[i].fields.initial_name,
         harga: multiHarga,
-        total: totalHarga,
+        total: _.sum(multiHarga),
       });
       // console.log(`loop luar ${i}`, multiHarga);
     }
@@ -266,19 +251,17 @@ export default function Pabrik() {
             <Formik
               initialValues={initialValues}
               onSubmit={async (values) => {
-                let hargaPabrik: any[] = [];
                 let semuaPabrik: any[] = [];
                 await new Promise((r) => setTimeout(r, 500));
                 // alert(JSON.stringify(values, null, 2));
-                console.log(
-                  hitungHargaPabrik(
-                    values,
-                    datapabrik,
-                    hargaPabrik,
-                    semuaPabrik
-                  )
-                );
+                hitungHargaPabrik(values, datapabrik, semuaPabrik);
                 console.log("semua pabrik multi size", semuaPabrik);
+                console.log(
+                  "tertinggi : ",
+                  _.maxBy(semuaPabrik, function (o) {
+                    return o.total;
+                  })
+                );
               }}
             >
               {({ values }) => (
