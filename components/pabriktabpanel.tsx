@@ -106,7 +106,7 @@ export default function PabrikTabPanel(detailPabrik) {
             <Heading as="h3" size="lg">
               {d.fields.full_name}
             </Heading>
-            <Text as="h4" fontSize="sm">
+            <Text as="h4" fontSize="sm" color="gray.500">
               Update terakhir{" "}
               {formatDistanceToNow(parseISO(d.fields.last_update), {
                 addSuffix: true,
@@ -114,7 +114,7 @@ export default function PabrikTabPanel(detailPabrik) {
               })}
             </Text>
             <Stack direction="column" spacing={2}>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   color="gray.500"
                   htmlFor="percent_size"
@@ -136,7 +136,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   %
                 </InputRightAddon>
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="percent_ton"
                   color="gray.500"
@@ -164,7 +164,7 @@ export default function PabrikTabPanel(detailPabrik) {
               Harga Pabrik
             </Text>
             <Stack direction="column" spacing={2}>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_150"
                   color="gray.500"
@@ -182,7 +182,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_150}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_140"
                   color="gray.500"
@@ -200,7 +200,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_140}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_130"
                   color="gray.500"
@@ -218,7 +218,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_130}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_120"
                   color="gray.500"
@@ -236,7 +236,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_120}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_110"
                   color="gray.500"
@@ -254,7 +254,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_110}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_100"
                   color="gray.500"
@@ -272,7 +272,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_100}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_90"
                   color="gray.500"
@@ -291,7 +291,7 @@ export default function PabrikTabPanel(detailPabrik) {
                 />
               </InputGroup>
 
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_80"
                   color="gray.500"
@@ -310,7 +310,7 @@ export default function PabrikTabPanel(detailPabrik) {
                 />
               </InputGroup>
 
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_70"
                   color="gray.500"
@@ -328,7 +328,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_70}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_60"
                   color="gray.500"
@@ -346,7 +346,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_60}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_50"
                   color="gray.500"
@@ -364,7 +364,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_50}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_40"
                   color="gray.500"
@@ -382,7 +382,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   value={formik.values.size_40}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_20"
                   color="gray.500"
@@ -401,7 +401,7 @@ export default function PabrikTabPanel(detailPabrik) {
                 />
               </InputGroup>
 
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   htmlFor="size_30"
                   color="gray.500"
@@ -423,12 +423,12 @@ export default function PabrikTabPanel(detailPabrik) {
             <Button
               mb={2}
               mt={2}
-              isFullWidth
-              colorScheme="orange"
-              size="lg"
-              aria-label="submit entry"
-              onClick={() => {}}
               type="submit"
+              isFullWidth
+              borderRadius="full"
+              size="md"
+              bg="orange.400"
+              color="white"
             >
               Ubah Data
             </Button>

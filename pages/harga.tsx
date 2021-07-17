@@ -1,6 +1,7 @@
 import * as React from "react";
 import useSWR from "swr";
 import Head from "next/head";
+import Link from "next/link";
 import Image from "next/image";
 import {
   Container,
@@ -9,7 +10,9 @@ import {
   Heading,
   Box,
   Flex,
+  Button,
 } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
 import LihatData from "../components/lihatdata";
 import TambahData from "../components/tambahdata";
@@ -43,25 +46,28 @@ export default function Harga() {
   if (!response.data) {
     return (
       <div>
-        <Flex
-          style={{
-            top: "50%",
-            left: "50%",
-            // width: "100%",
-            // height: "100%",
-            position: "fixed",
-          }}
-        >
-          <motion.div
-            animate={{
-              scale: [0.5, 1, 1, 0.5, 0.5],
-              rotate: [0, 270, 0, 270, 0],
-              borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+        <Container w="100vw" h="100vh" maxW="xl" pt="4" pb="8">
+          <Box
+            style={{
+              top: "50%",
+              left: "50%",
+              // width: "100%",
+              // height: "100%",
+              position: "fixed",
+              margin: "-25px 0 0 -25px",
             }}
           >
-            <Image src={PanenUdangLogo} alt="panen udang header" />
-          </motion.div>
-        </Flex>
+            <motion.div
+              animate={{
+                scale: [0.5, 1, 1, 0.5, 0.5],
+                rotate: [0, 270, 0, 270, 0],
+                borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+              }}
+            >
+              <Image src={PanenUdangLogo} alt="panen udang header" />
+            </motion.div>
+          </Box>
+        </Container>
       </div>
     );
   }
@@ -76,9 +82,22 @@ export default function Harga() {
       <Head>
         <title>Harga Udang | PanenUdang</title>
       </Head>
-      <Container w="100vw" maxW="xl" pt="8" pb="8">
+      <Container w="100vw" maxW="xl" pt="4" pb="8">
         <Box>
-          <Box m={6} w={300}>
+          <Flex alignContent="right">
+            <Link href="/" passHref>
+              <Button
+                leftIcon={<ArrowBackIcon />}
+                variant="outline"
+                borderRadius="15"
+                color="gray"
+                size="md"
+              >
+                Home
+              </Button>
+            </Link>
+          </Flex>
+          <Box m={4} align="center">
             <Image
               src={PanenUdangImg}
               alt="panen udang header"

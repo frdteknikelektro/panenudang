@@ -57,6 +57,7 @@ export default function PengaturanPabrik(dataPabrik) {
         variant="outline"
         borderRadius="15"
         color="gray"
+        size="md"
         onClick={onOpen}
       />
 
