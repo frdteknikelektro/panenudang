@@ -366,13 +366,10 @@ export default function Pabrik() {
                 let semuaPabrik: any[] = [];
                 await new Promise((r) => setTimeout(r, 500));
                 hitungHargaPabrik(values, datapabrik, semuaPabrik);
-                // console.log("semua pabrik multi size", semuaPabrik);
                 listPabrik = _.orderBy(semuaPabrik, ["total"], ["desc"]);
                 pabrikTerbaik = _.maxBy(semuaPabrik, function (o) {
                   return o.total;
                 });
-                // console.log("pabrikTerbaik", pabrikTerbaik);
-                // console.log("ranking pabrik", listPabrik);
               }}
             >
               {({ values }) => (
