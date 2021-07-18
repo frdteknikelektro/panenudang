@@ -21,12 +21,14 @@ import {
   OmitCommonProps,
   Tag,
   Spacer,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
 } from "@chakra-ui/react";
-import {
-  PlusSquareIcon,
-  SmallCloseIcon,
-  ArrowBackIcon,
-} from "@chakra-ui/icons";
+import { SmallCloseIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { FiPlusCircle } from "react-icons/fi";
 
 import _ from "lodash";
@@ -124,7 +126,7 @@ export default function Pabrik() {
   }
 
   function hitungHargaPabrik(values, data, semuaPabrik) {
-    console.log("data size tonase", values, "datapabrik", data);
+    // console.log("data size tonase", values, "datapabrik", data);
     function hitungHargaSize(i, k, hargaSize) {
       let naikSize: number = 0;
       let naikTon: number = 0;
@@ -141,97 +143,175 @@ export default function Pabrik() {
           (30 - naikSize) *
             ((data[i].fields.size_20 - data[i].fields.size_30) * 0.1) +
           data[i].fields.size_30;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 40) {
         hargaSize =
           (40 - naikSize) *
             ((data[i].fields.size_30 - data[i].fields.size_40) * 0.1) +
           data[i].fields.size_40;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 50) {
         hargaSize =
           (50 - naikSize) *
             ((data[i].fields.size_40 - data[i].fields.size_50) * 0.1) +
           data[i].fields.size_50;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 60) {
         hargaSize =
           (60 - naikSize) *
             ((data[i].fields.size_50 - data[i].fields.size_60) * 0.1) +
           data[i].fields.size_60;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 70) {
         hargaSize =
           (70 - naikSize) *
             ((data[i].fields.size_60 - data[i].fields.size_70) * 0.1) +
           data[i].fields.size_70;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 80) {
         hargaSize =
           (80 - naikSize) *
             ((data[i].fields.size_70 - data[i].fields.size_80) * 0.1) +
           data[i].fields.size_80;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 90) {
         hargaSize =
           (90 - naikSize) *
             ((data[i].fields.size_80 - data[i].fields.size_90) * 0.1) +
           data[i].fields.size_90;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 100) {
         hargaSize =
           (100 - naikSize) *
             ((data[i].fields.size_90 - data[i].fields.size_100) * 0.1) +
           data[i].fields.size_100;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 110) {
         hargaSize =
           (110 - naikSize) *
             ((data[i].fields.size_100 - data[i].fields.size_110) * 0.1) +
           data[i].fields.size_110;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 120) {
         hargaSize =
           (120 - naikSize) *
             ((data[i].fields.size_110 - data[i].fields.size_120) * 0.1) +
           data[i].fields.size_120;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 130) {
         hargaSize =
           (130 - naikSize) *
             ((data[i].fields.size_120 - data[i].fields.size_130) * 0.1) +
           data[i].fields.size_130;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 140) {
         hargaSize =
           (140 - naikSize) *
             ((data[i].fields.size_130 - data[i].fields.size_140) * 0.1) +
           data[i].fields.size_140;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
       if (naikSize < 150) {
         hargaSize =
           (150 - naikSize) *
             ((data[i].fields.size_140 - data[i].fields.size_150) * 0.1) +
           data[i].fields.size_150;
-        return _.round(hargaSize * naikTon);
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: _.round(hargaSize * naikTon),
+        };
       }
     }
 
     for (let i = 0; i < data.length; i++) {
       let hargaSize: number;
-      let multiHarga: number[] = [];
+      let multiHarga: any[] = [];
       for (let k = 0; k < values.panen.length; k++) {
         multiHarga.push(hitungHargaSize(i, k, hargaSize));
         // console.log(`loop dalam ${i} ${k}`, multiHarga);
@@ -241,20 +321,21 @@ export default function Pabrik() {
         pabrik: data[i].fields.full_name,
         initial: data[i].fields.initial_name,
         harga: multiHarga,
-        total: _.sum(multiHarga),
+        total: _.sumBy(multiHarga, "harga"),
       });
       // console.log("loop luar", multiHarga);
     }
   }
 
   let pabrikTerbaik = null;
+  let listPabrik: any[] = [];
 
   return (
     <div>
       <Head>
         <title>Harga Udang | Bongkar di Mana?</title>
       </Head>
-      <Container w="100vw" maxW="xl" pt="4" pb="8">
+      <Container w="100vw" pt="4" maxW="xl" pb="8">
         <Box>
           <Flex alignContent="right">
             <Link href="/" passHref>
@@ -285,11 +366,13 @@ export default function Pabrik() {
                 let semuaPabrik: any[] = [];
                 await new Promise((r) => setTimeout(r, 500));
                 hitungHargaPabrik(values, datapabrik, semuaPabrik);
-                console.log("semua pabrik multi size", semuaPabrik);
+                // console.log("semua pabrik multi size", semuaPabrik);
+                listPabrik = _.orderBy(semuaPabrik, ["total"], ["desc"]);
                 pabrikTerbaik = _.maxBy(semuaPabrik, function (o) {
                   return o.total;
                 });
-                console.log("pabrikTerbaik", pabrikTerbaik);
+                // console.log("pabrikTerbaik", pabrikTerbaik);
+                // console.log("ranking pabrik", listPabrik);
               }}
             >
               {({ values }) => (
@@ -399,7 +482,94 @@ export default function Pabrik() {
                       >
                         kirim hasil panen ke:
                       </Text>
-                      <Box p={2} boxShadow="base" m={2} borderRadius="15">
+                      <Stack direction="column" spacing={4}>
+                        {listPabrik.map((pabrik, index) => (
+                          <Box
+                            key={pabrik.id}
+                            p={2}
+                            boxShadow="base"
+                            m={2}
+                            borderRadius="15"
+                          >
+                            <Stack direction="column" spacing={2}>
+                              <Text
+                                as="h2"
+                                fontSize="xl"
+                                color="gray.600"
+                                fontWeight={700}
+                                align="center"
+                                isTruncated
+                              >
+                                {index === 0 ? (
+                                  <Tag
+                                    mr={2}
+                                    size="sm"
+                                    borderRadius="full"
+                                    variant="subtle"
+                                    colorScheme="green"
+                                  >
+                                    Best
+                                  </Tag>
+                                ) : (
+                                  ""
+                                )}
+                                {pabrik.pabrik}
+                              </Text>
+                              <Box align="center">
+                                <Tag
+                                  size="lg"
+                                  borderRadius="full"
+                                  p={2}
+                                  align="center"
+                                  colorScheme="orange"
+                                  variant="subtle"
+                                  color="orange.500"
+                                  fontSize="lg"
+                                  fontWeight="bold"
+                                >
+                                  {Intl.NumberFormat("id", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                  }).format(pabrik.total)}
+                                </Tag>
+                              </Box>
+                              <Box>
+                                <Text
+                                  as="h2"
+                                  fontSize="sm"
+                                  color="gray.500"
+                                  fontWeight={400}
+                                  align="center"
+                                  mb={2}
+                                >
+                                  estimasi kenaikan
+                                </Text>
+                                <Table variant="simple" size="sm" p={2}>
+                                  <Thead>
+                                    <Tr>
+                                      <Th>Label</Th>
+                                      <Th>Size</Th>
+                                      <Th>Tonase</Th>
+                                    </Tr>
+                                  </Thead>
+                                  <Tbody scrollBehavior="inside">
+                                    {pabrik.harga.map((harga) => (
+                                      <Tr key={harga.naikSize}>
+                                        <Td>
+                                          S{harga.size} T{harga.tonase}
+                                        </Td>
+                                        <Td>{harga.naikSize}</Td>
+                                        <Td>{harga.naikTon}</Td>
+                                      </Tr>
+                                    ))}
+                                  </Tbody>
+                                </Table>
+                              </Box>
+                            </Stack>
+                          </Box>
+                        ))}
+                      </Stack>
+                      {/* <Box p={2} boxShadow="base" m={2} borderRadius="15">
                         <Stack direction="column" spacing={2}>
                           <Text
                             as="h2"
@@ -429,7 +599,7 @@ export default function Pabrik() {
                             </Tag>
                           </Box>
                         </Stack>
-                      </Box>
+                      </Box> */}
                     </>
                   ) : null}
                 </Form>
