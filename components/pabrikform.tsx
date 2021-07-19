@@ -54,7 +54,7 @@ export default function PabrikForm(data: any) {
   }
 
   function hitungHargaPabrik(values, data, semuaPabrik) {
-    console.log("data size tonase", values, "datapabrik", data);
+    // console.log("data size tonase", values, "datapabrik", data);
     function hitungHargaSize(i, k, hargaSize) {
       let naikSize: number = 0;
       let naikTon: number = 0;
@@ -273,6 +273,14 @@ export default function PabrikForm(data: any) {
           naikTon: _.round(naikTon, 2),
           harga: _.round(hargaSize * naikTon),
         };
+      } else {
+        return {
+          size: values.panen[k].size,
+          tonase: values.panen[k].tonase,
+          naikSize: _.round(naikSize, 2),
+          naikTon: _.round(naikTon, 2),
+          harga: 0,
+        };
       }
     }
 
@@ -306,14 +314,6 @@ export default function PabrikForm(data: any) {
             let semuaPabrik: any[] = [];
             await new Promise((r) => setTimeout(r, 500));
             hitungHargaPabrik(values, datapabrik, semuaPabrik);
-            console.log(
-              "semua",
-              semuaPabrik,
-              "sorted",
-              listPabrik,
-              "best",
-              pabrikTerbaik
-            );
             listPabrik = _.orderBy(semuaPabrik, ["total"], ["desc"]);
             pabrikTerbaik = _.maxBy(semuaPabrik, function (o) {
               return o.total;
