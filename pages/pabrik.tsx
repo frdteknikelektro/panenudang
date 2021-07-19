@@ -544,19 +544,22 @@ export default function Pabrik() {
                                 <Table variant="simple" size="sm" p={2}>
                                   <Thead>
                                     <Tr>
-                                      <Th>Label</Th>
                                       <Th>Size</Th>
                                       <Th>Tonase</Th>
+                                      <Th>Harga</Th>
                                     </Tr>
                                   </Thead>
-                                  <Tbody scrollBehavior="inside">
+                                  <Tbody>
                                     {pabrik.harga.map((harga) => (
                                       <Tr key={harga.naikSize}>
-                                        <Td>
-                                          S{harga.size} T{harga.tonase}
-                                        </Td>
                                         <Td>{harga.naikSize}</Td>
                                         <Td>{harga.naikTon}</Td>
+                                        <Td>
+                                          {Intl.NumberFormat("id", {
+                                            style: "currency",
+                                            currency: "IDR",
+                                          }).format(harga.harga)}
+                                        </Td>
                                       </Tr>
                                     ))}
                                   </Tbody>
@@ -566,37 +569,6 @@ export default function Pabrik() {
                           </Box>
                         ))}
                       </Stack>
-                      {/* <Box p={2} boxShadow="base" m={2} borderRadius="15">
-                        <Stack direction="column" spacing={2}>
-                          <Text
-                            as="h2"
-                            fontSize="2xl"
-                            color="gray.600"
-                            fontWeight={700}
-                            align="center"
-                          >
-                            {pabrikTerbaik.pabrik}
-                          </Text>
-                          <Box align="center">
-                            <Tag
-                              size="lg"
-                              borderRadius="full"
-                              p={2}
-                              align="center"
-                              colorScheme="orange"
-                              variant="subtle"
-                              color="orange.500"
-                              fontSize="lg"
-                              fontWeight="bold"
-                            >
-                              {Intl.NumberFormat("id", {
-                                style: "currency",
-                                currency: "IDR",
-                              }).format(pabrikTerbaik.total)}
-                            </Tag>
-                          </Box>
-                        </Stack>
-                      </Box> */}
                     </>
                   ) : null}
                 </Form>
