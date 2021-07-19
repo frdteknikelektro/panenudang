@@ -58,7 +58,7 @@ export default function PabrikCard({ listPabrik }: PabrikValue) {
                   fontSize="lg"
                   fontWeight="bold"
                 >
-                  {pabrik.total != 0
+                  {pabrik.total > 0
                     ? Intl.NumberFormat("id", {
                         style: "currency",
                         currency: "IDR",
@@ -91,7 +91,7 @@ export default function PabrikCard({ listPabrik }: PabrikValue) {
                         <Td>{harga.naikSize}</Td>
                         <Td>{harga.naikTon}</Td>
                         <Td>
-                          {harga.harga != 0 ? (
+                          {harga.harga > 0 ? (
                             Intl.NumberFormat("id", {
                               style: "currency",
                               currency: "IDR",
