@@ -11,6 +11,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import format from "date-fns/format";
+import { useRouter } from "next/router";
 import parseISO from "date-fns/parseISO";
 import { id as indo } from "date-fns/locale";
 // import { trigger } from "swr";
@@ -18,6 +19,7 @@ import { id as indo } from "date-fns/locale";
 export default function HapusData(harga) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
+  const router = useRouter();
 
   const { harga: dataharga } = harga;
 
@@ -52,7 +54,7 @@ export default function HapusData(harga) {
       duration: 5000,
     });
     // trigger(`https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`)
-    window.location.reload();
+    router.reload();
   }
   return (
     <>

@@ -2,6 +2,7 @@ import * as React from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import {
   Container,
@@ -14,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
-import LihatData from "../components/lihatdata";
+import HargaCard from "../components/hargacard";
 import TambahData from "../components/tambahdata";
 import PanenUdangImg from "../public/PanenUdanghead.png";
 import PanenUdangLogo from "../public/pulogo.png";
@@ -31,6 +32,7 @@ const fetcher = async (
 };
 
 export default function Harga() {
+  const router = useRouter();
   const response = useSWR(
     `https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`,
     (url) =>
@@ -75,27 +77,25 @@ export default function Harga() {
 
   const { data: dataharga } = response.data;
 
-  console.log(dataharga);
+  // console.log(dataharga);
 
   return (
     <div>
       <Head>
-        <title>Harga Udang | PanenUdang</title>
+        <title>HargaUdang | PanenUdang</title>
       </Head>
       <Container w="100vw" maxW="xl" pt="4" pb="8">
         <Box>
           <Flex alignContent="right">
-            <Link href="/" passHref>
-              <Button
-                leftIcon={<ArrowBackIcon />}
-                variant="outline"
-                borderRadius="15"
-                color="gray"
-                size="md"
-              >
-                Home
-              </Button>
-            </Link>
+            <Button
+              onClick={() => router.back()}
+              variant="outline"
+              borderRadius="full"
+              color="gray"
+              size="md"
+            >
+              <ArrowBackIcon />
+            </Button>
           </Flex>
           <Box m={4} align="center">
             <Image
@@ -112,7 +112,7 @@ export default function Harga() {
           <Stack spacing={4} direction="column">
             {dataharga
               ? dataharga.map((d: { id: any }) => (
-                  <LihatData data={d} key={d.id} id={d.id} />
+                  <HargaCard key={d.id} data={d} />
                 ))
               : "no data"}
           </Stack>

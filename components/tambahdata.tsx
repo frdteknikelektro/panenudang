@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import {
   Button,
   Text,
   Select,
   Stack,
   Box,
-  Badge,
   Drawer,
   DrawerBody,
   DrawerHeader,
@@ -32,10 +32,10 @@ const fetcher = async (
 };
 
 export default function TambahData() {
-  // const [provinceName, setProvinceName] = useState("");
   const [provinceId, setProvinceId] = useState("");
 
   const toast = useToast();
+  const router = useRouter();
 
   // Shape of form values
   interface FormValues {
@@ -168,7 +168,7 @@ export default function TambahData() {
       });
     }
     setTimeout(() => {
-      window.location.reload();
+      router.reload();
     }, 3000);
   }
 
@@ -266,16 +266,17 @@ export default function TambahData() {
       <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="md">
         <DrawerOverlay>
           <DrawerContent>
-            <Badge
-              p={4}
-              fontSize="0.8em"
-              onClick={() => {
-                onClose();
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              <ArrowBackIcon w={4} h={4} /> Kembali
-            </Badge>
+            <Box pl={4} pt={4}>
+              <Button
+                onClick={() => onClose()}
+                variant="outline"
+                borderRadius="full"
+                colorScheme="gray"
+                size="md"
+              >
+                <ArrowBackIcon />
+              </Button>
+            </Box>
             <DrawerHeader>
               <Text>Tambah Harga Udang</Text>
               <Text

@@ -1,7 +1,7 @@
 import React from "react";
 import useSWR from "swr";
 import Head from "next/head";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import {
   Container,
@@ -30,6 +30,7 @@ const fetcher = async (
 };
 
 export default function Pabrik() {
+  const router = useRouter();
   const response = useSWR(
     `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${process.env.AIRTABLE_TABLE}`,
     (url) =>
@@ -79,17 +80,15 @@ export default function Pabrik() {
       <Container w="100vw" pt="4" maxW="xl" pb="8">
         <Box>
           <Flex alignContent="right">
-            <Link href="/" passHref>
-              <Button
-                leftIcon={<ArrowBackIcon />}
-                variant="outline"
-                borderRadius="15"
-                color="gray"
-                size="md"
-              >
-                Beranda
-              </Button>
-            </Link>
+            <Button
+              onClick={() => router.back()}
+              variant="outline"
+              borderRadius="full"
+              color="gray"
+              size="md"
+            >
+              <ArrowBackIcon />
+            </Button>
             <Spacer />
             <PengaturanPabrik dataPabrik={datapabrik} />
           </Flex>

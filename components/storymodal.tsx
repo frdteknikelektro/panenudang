@@ -63,7 +63,6 @@ export default function StoryModal(data) {
 
         document.body.removeChild(a);
         onClose();
-        // window.location.href = story;
       });
     }
 

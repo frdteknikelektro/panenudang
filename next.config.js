@@ -8,5 +8,8 @@ module.exports = {
     AIRTABLE_API_KEY: "keym2E3xKv1CV3xJo",
     AIRTABLE_BASE: "appIaGBCQ0k6OH8u2",
     AIRTABLE_TABLE: "pengaturan_pabrik",
+    NEXT_SUPABASE_URL: "https://pgxrlpkctmwovmkyieml.supabase.co",
+    NEXT_SUPABASE_ANON_KEY:
+      "eyjhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyNjE1ODMwMSwiZXhwIjoxOTQxNzM0MzAxfQ.hmN8zFcTtsvWrW9FmpgZ32w2xnt-9SHPHDOiF4agiok",
   },
 };

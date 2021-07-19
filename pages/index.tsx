@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Harga Udang | Home</title>
+        <title>Panen Udang | Home</title>
         <meta name="description" content="All in one app for Panen Udang" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

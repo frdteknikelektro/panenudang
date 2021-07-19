@@ -19,13 +19,9 @@ import { trigger } from "swr";
 
 export default function PabrikTabPanel(detailPabrik) {
   const { detailPabrik: d } = detailPabrik;
-  //   console.log("detail pabrik data", d);
   const toast = useToast();
 
   function editData(value) {
-    // console.log("edit data", value);
-
-    // console.log(JSON.stringify(value));
     fetch(
       `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${process.env.AIRTABLE_TABLE}/${d.id}`,
       {
@@ -50,7 +46,6 @@ export default function PabrikTabPanel(detailPabrik) {
     trigger(
       `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${process.env.AIRTABLE_TABLE}`
     );
-    //   window.location.reload();
   }
 
   const formik = useFormik({
