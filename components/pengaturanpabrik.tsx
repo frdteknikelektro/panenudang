@@ -13,10 +13,8 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  IconButton,
+  Button,
 } from "@chakra-ui/react";
-
-import { SettingsIcon } from "@chakra-ui/icons";
 
 import PabrikTabPanel from "./pabriktabpanel";
 
@@ -51,15 +49,16 @@ export default function PengaturanPabrik(dataPabrik) {
 
   return (
     <>
-      <IconButton
-        aria-label="Pengaturan pabrik"
-        icon={<SettingsIcon />}
+      <Button
+        onClick={onOpen}
         variant="outline"
-        borderRadius="15"
+        borderRadius="full"
         color="gray"
         size="md"
-        onClick={onOpen}
-      />
+        ml={2}
+      >
+        🍤
+      </Button>
 
       <Drawer
         isOpen={isOpen}
@@ -71,7 +70,9 @@ export default function PengaturanPabrik(dataPabrik) {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Pengaturan Pabrik</DrawerHeader>
+          <DrawerHeader boxShadow="md">
+            🍤 {"   "} Pengaturan Pabrik
+          </DrawerHeader>
           <DrawerBody p={2}>
             <Tabs isFitted variant="soft-rounded" colorScheme="orange">
               <TabList mb="1em">

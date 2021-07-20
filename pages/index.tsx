@@ -37,7 +37,7 @@ export default function Home() {
             >
               <Box align="center">
                 <Text as="h1" fontSize="4xl" fontWeight={600}>
-                  🍤
+                  💵
                 </Text>
               </Box>
               <Text as="h1" fontSize="lg" fontWeight={600} color="gray.600">

@@ -20,6 +20,7 @@ import { trigger } from "swr";
 export default function PabrikTabPanel(detailPabrik) {
   const { detailPabrik: d } = detailPabrik;
   const toast = useToast();
+  console.log(d);
 
   function editData(value) {
     fetch(
@@ -119,7 +120,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size
                 </InputLeftAddon>
                 <Input
-                  id="percent_size"
+                  id={`percent_size${d.id}`}
                   name="percent_size"
                   type="number"
                   placeholder="Dalam %"
@@ -141,7 +142,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Tonase
                 </InputLeftAddon>
                 <Input
-                  id="percent_ton"
+                  id={`percent_ton${d.id}`}
                   name="percent_ton"
                   type="number"
                   placeholder="Dalam kg"
@@ -169,7 +170,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 150
                 </InputLeftAddon>
                 <Input
-                  id="size_150"
+                  id={`size_150${d.id}`}
                   name="size_150"
                   type="number"
                   placeholder="Dalam Rp"
@@ -187,7 +188,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 140
                 </InputLeftAddon>
                 <Input
-                  id="size_140"
+                  id={`size_140${d.id}`}
                   name="size_140"
                   type="number"
                   placeholder="Dalam Rp"
@@ -205,7 +206,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 130
                 </InputLeftAddon>
                 <Input
-                  id="size_130"
+                  id={`size_130${d.id}`}
                   name="size_130"
                   type="number"
                   placeholder="Dalam Rp"
@@ -223,7 +224,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 120
                 </InputLeftAddon>
                 <Input
-                  id="size_120"
+                  id={`size_120${d.id}`}
                   name="size_120"
                   type="number"
                   placeholder="Dalam Rp"
@@ -241,7 +242,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 110
                 </InputLeftAddon>
                 <Input
-                  id="size_110"
+                  id={`size_110${d.id}`}
                   name="size_110"
                   type="number"
                   placeholder="Dalam Rp"
@@ -259,7 +260,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 100
                 </InputLeftAddon>
                 <Input
-                  id="size_100"
+                  id={`size_100${d.id}`}
                   name="size_100"
                   type="number"
                   placeholder="Dalam Rp"
@@ -277,7 +278,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 90
                 </InputLeftAddon>
                 <Input
-                  id="size_90"
+                  id={`size_90${d.id}`}
                   name="size_90"
                   type="number"
                   placeholder="Dalam Rp"
@@ -296,7 +297,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 80
                 </InputLeftAddon>
                 <Input
-                  id="size_80"
+                  id={`size_80${d.id}`}
                   name="size_80"
                   type="number"
                   placeholder="Dalam Rp"
@@ -315,7 +316,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 70
                 </InputLeftAddon>
                 <Input
-                  id="size_70"
+                  id={`size_70${d.id}`}
                   name="size_70"
                   type="number"
                   placeholder="Dalam Rp"
@@ -333,7 +334,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 60
                 </InputLeftAddon>
                 <Input
-                  id="size_60"
+                  id={`size_60${d.id}`}
                   name="size_60"
                   type="number"
                   placeholder="Dalam Rp"
@@ -351,7 +352,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 50
                 </InputLeftAddon>
                 <Input
-                  id="size_50"
+                  id={`size_50${d.id}`}
                   name="size_50"
                   type="number"
                   placeholder="Dalam Rp"
@@ -369,7 +370,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 40
                 </InputLeftAddon>
                 <Input
-                  id="size_40"
+                  id={`size_40${d.id}`}
                   name="size_40"
                   type="number"
                   placeholder="Dalam Rp"
@@ -387,7 +388,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 30
                 </InputLeftAddon>
                 <Input
-                  id="size_30"
+                  id={`size_30${d.id}`}
                   name="size_30"
                   type="number"
                   placeholder="Dalam Rp"
@@ -405,7 +406,7 @@ export default function PabrikTabPanel(detailPabrik) {
                   Size 20
                 </InputLeftAddon>
                 <Input
-                  id="size_20"
+                  id={`size_20${d.id}`}
                   name="size_20"
                   type="number"
                   placeholder="Dalam Rp"

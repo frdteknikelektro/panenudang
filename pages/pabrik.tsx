@@ -16,6 +16,7 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 
 import { motion } from "framer-motion";
 import PengaturanPabrik from "../components/pengaturanpabrik";
+import PengaturanLcs from "../components/pengaturanlcs";
 import PabrikForm from "../components/pabrikform";
 // import PabrikCard from "../components/pabrikcard";
 import PanenUdangLogo from "../public/pulogo.png";
@@ -31,6 +32,7 @@ const fetcher = async (
 
 export default function Pabrik() {
   const router = useRouter();
+
   const response = useSWR(
     `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${process.env.AIRTABLE_TABLE}`,
     (url) =>
@@ -41,9 +43,19 @@ export default function Pabrik() {
         },
       })
   );
-  if (response.error)
+  const responseDataLcs = useSWR(
+    `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/lcs_all`,
+    (url) =>
+      fetcher(url, {
+        headers: {
+          Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+          Accept: "application/json",
+        },
+      })
+  );
+  if (response.error || responseDataLcs.error)
     return <div>Gagal mengambil data. Coba refresh ulang</div>;
-  if (!response.data) {
+  if (!response.data || !responseDataLcs.data) {
     return (
       <div>
         <Container w="100vw" h="100vh" maxW="xl" pt="4" pb="8">
@@ -71,6 +83,8 @@ export default function Pabrik() {
   }
 
   const { records: datapabrik } = response.data;
+  const { records: datalcs } = responseDataLcs.data;
+  // const { records: databongkar } = responseDataBongkar.data;
 
   return (
     <div>
@@ -90,6 +104,7 @@ export default function Pabrik() {
               <ArrowBackIcon />
             </Button>
             <Spacer />
+            <PengaturanLcs dataLcs={datalcs} />
             <PengaturanPabrik dataPabrik={datapabrik} />
           </Flex>
           <Box m={4} align="center">
@@ -99,7 +114,7 @@ export default function Pabrik() {
           </Box>
           <Divider mb={4} />
 
-          <PabrikForm datapabrik={datapabrik} />
+          <PabrikForm datapabrik={datapabrik} datalcs={datalcs} />
         </Box>
       </Container>
     </div>
