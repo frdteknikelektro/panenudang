@@ -15,12 +15,12 @@ import { useFormik } from "formik";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import parseISO from "date-fns/parseISO";
 import { id } from "date-fns/locale";
-import { trigger } from "swr";
+import { trigger, mutate } from "swr";
 
 export default function PabrikTabPanel(detailPabrik) {
   const { detailPabrik: d } = detailPabrik;
   const toast = useToast();
-  console.log(d);
+  // console.log(d);
 
   function editData(value) {
     fetch(
@@ -44,6 +44,9 @@ export default function PabrikTabPanel(detailPabrik) {
       status: "success",
       duration: 5000,
     });
+    mutate(
+      `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${process.env.AIRTABLE_TABLE}`
+    );
     trigger(
       `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${process.env.AIRTABLE_TABLE}`
     );
@@ -109,52 +112,6 @@ export default function PabrikTabPanel(detailPabrik) {
                 locale: id,
               })}
             </Text>
-            <Stack direction="column" spacing={2}>
-              <InputGroup size="sm">
-                <InputLeftAddon
-                  color="gray.500"
-                  htmlFor="percent_size"
-                  fontWeight={600}
-                  width="40%"
-                >
-                  Size
-                </InputLeftAddon>
-                <Input
-                  id={`percent_size${d.id}`}
-                  name="percent_size"
-                  type="number"
-                  placeholder="Dalam %"
-                  // readOnly
-                  onChange={formik.handleChange}
-                  value={formik.values.percent_size}
-                />
-                <InputRightAddon color="gray.500" fontWeight={600}>
-                  %
-                </InputRightAddon>
-              </InputGroup>
-              <InputGroup size="sm">
-                <InputLeftAddon
-                  htmlFor="percent_ton"
-                  color="gray.500"
-                  fontWeight={600}
-                  width="40%"
-                >
-                  Tonase
-                </InputLeftAddon>
-                <Input
-                  id={`percent_ton${d.id}`}
-                  name="percent_ton"
-                  type="number"
-                  placeholder="Dalam kg"
-                  // readOnly
-                  onChange={formik.handleChange}
-                  value={formik.values.percent_ton}
-                />
-                <InputRightAddon color="gray.500" fontWeight={600}>
-                  %
-                </InputRightAddon>
-              </InputGroup>
-            </Stack>
             <Divider mb={4} />
             <Text as="h3" fontSize="lg" fontWeight={600}>
               Harga Pabrik

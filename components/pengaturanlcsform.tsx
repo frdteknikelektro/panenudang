@@ -13,7 +13,7 @@ import { useFormik } from "formik";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import parseISO from "date-fns/parseISO";
 import { id } from "date-fns/locale";
-import { trigger } from "swr";
+import { trigger, mutate } from "swr";
 
 export default function PengaturanLcsForm(data) {
   const { data: d } = data;
@@ -22,7 +22,7 @@ export default function PengaturanLcsForm(data) {
   // console.log("lcs", d);
 
   function editData(value) {
-    console.log(JSON.stringify(value));
+    // console.log(JSON.stringify(value));
     fetch(`https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/lcs_all`, {
       method: "PATCH",
       body: JSON.stringify(value),
@@ -41,6 +41,7 @@ export default function PengaturanLcsForm(data) {
       status: "success",
       duration: 5000,
     });
+    mutate(`https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/lcs_all`);
     trigger(`https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/lcs_all`);
   }
 
