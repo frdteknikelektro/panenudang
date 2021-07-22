@@ -11,7 +11,7 @@ function hitungHargaSize(values, i, k, data, bongkar, hargaSize) {
     // console.log("lodash", data[i].fields.initial_name, o.fields.pabrik);
     return o.fields.pabrik === data[i].fields.initial_name;
   });
-  console.log(data[i].fields.initial_name, percentLcs);
+  // console.log(data[i].fields.initial_name, percentLcs);
 
   naikSize =
     values.panen[k].size -
@@ -251,7 +251,8 @@ export function hitungHargaPabrik(values, data, bongkar, semuaPabrik) {
       pabrik: data[i].fields.full_name,
       initial: data[i].fields.initial_name,
       harga: multiHarga,
-      total: _.sumBy(multiHarga, "harga"),
+      totalHarga: _.sumBy(multiHarga, "harga"),
+      totalTonase: _.round(_.sumBy(multiHarga, "naikTon"), 2),
     });
     // console.log("loop luar", multiHarga);
   }

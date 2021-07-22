@@ -58,12 +58,28 @@ export default function PabrikCard({ listPabrik }: PabrikValue) {
                   fontSize="lg"
                   fontWeight="bold"
                 >
-                  {pabrik.total > 0
+                  {pabrik.totalHarga > 0
                     ? Intl.NumberFormat("id", {
                         style: "currency",
                         currency: "IDR",
-                      }).format(pabrik.total)
+                      }).format(pabrik.totalHarga)
                     : "No price"}
+                </Tag>
+              </Box>
+              <Box align="center">
+                <Tag
+                  size="md"
+                  borderRadius="full"
+                  p={2}
+                  align="center"
+                  colorScheme="gray"
+                  variant="subtle"
+                  color="gray.500"
+                  fontSize="sm"
+                >
+                  {pabrik.totalTonase > 0
+                    ? pabrik.totalTonase + " ton"
+                    : "No weight"}
                 </Tag>
               </Box>
               <Box>

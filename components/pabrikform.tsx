@@ -107,9 +107,10 @@ export default function PabrikForm(data) {
             let semuaPabrik: any[] = [];
             await new Promise((r) => setTimeout(r, 500));
             hitungHargaPabrik(values, datapabrik, bongkarLcs, semuaPabrik);
-            listPabrik = _.orderBy(semuaPabrik, ["total"], ["desc"]);
+            listPabrik = _.orderBy(semuaPabrik, ["totalHarga"], ["desc"]);
+            // console.log(listPabrik, semuaPabrik);
             pabrikTerbaik = _.maxBy(semuaPabrik, function (o) {
-              return o.total;
+              return o.totalHarga;
             });
           }}
         >
