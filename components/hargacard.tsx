@@ -23,9 +23,10 @@ import differenceInDays from "date-fns/differenceInDays";
 import StoryModal from "./storymodal";
 import HargaEditForm from "./hargaeditform";
 
+import _ from "lodash";
+
 export default function HargaCard(data) {
   const { data: dataharga } = data;
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -51,7 +52,8 @@ export default function HargaCard(data) {
           </Box>
           <Box p={2} w="xl">
             <Text fontSize="md" fontWeight="semibold">
-              {dataharga.region.full_name}
+              {_.startCase(dataharga.region.province_name.toLowerCase())},{" "}
+              {_.startCase(dataharga.region.name.toLowerCase())}
             </Text>
             <Text fontSize="sm" color="gray.500">
               {dataharga.creator.name} &bull;{" "}

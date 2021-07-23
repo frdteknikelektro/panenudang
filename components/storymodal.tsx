@@ -342,16 +342,6 @@ export default function StoryModal(data) {
               </Box>
             </Box>
           </Box>
-          {/* <Button
-                        isFullWidth
-                        mt={2}
-                        mb={2}
-                        size="lg"
-                        colorScheme="purple"
-                        onClick={() => {
-                        screenshot()
-                    }}><Icon as={FaInstagram}/>{' '}
-                        Share</Button> */}
         </DrawerContent>
       </Drawer>
     </div>
