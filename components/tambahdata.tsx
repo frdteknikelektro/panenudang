@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import {
   Button,
@@ -21,6 +21,7 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import format from "date-fns/format";
 import { useFormik, FormikErrors } from "formik";
 import useSWR, { trigger } from "swr";
+import _ from "lodash";
 
 const fetcher = async (
   input: RequestInfo,
@@ -36,6 +37,9 @@ export default function TambahData() {
 
   const toast = useToast();
   const router = useRouter();
+
+  const regionlist = useRef(null);
+  const cb = useRef(null);
 
   // Shape of form values
   interface FormValues {
@@ -230,7 +234,6 @@ export default function TambahData() {
 
   // console.log("province id", provinceId);
   const listRegionResponse = useSWR(
-    // `https://app.jala.tech/api/regions?sort=&scope=regency&search=${provinceName}&per_page=100&id=${provinceId}&`,
     `https://app.jala.tech/api/regions?sort=&scope=regency&province_id__in=${provinceId}&per_page=100`,
     (url) =>
       fetcher(url, {
@@ -244,12 +247,7 @@ export default function TambahData() {
 
   if (listRegionResponse.data) {
     region = listRegionResponse.data.data;
-    // console.log("region", region);
   }
-
-  const regionlist = document.getElementById("region-list");
-
-  // const provincePicker = document.getElementById("province-picker");
 
   return (
     <div>
@@ -284,6 +282,7 @@ export default function TambahData() {
                 id="region-list"
                 fontWeight={500}
                 fontSize="xs"
+                ref={regionlist}
               >
                 {formik.values.region_name.join()}
               </Text>
@@ -324,7 +323,7 @@ export default function TambahData() {
                               // htmlFor={provincePicker}
                               key={d.id}
                             >
-                              {d.name}
+                              {_.startCase(d.name.toLowerCase())}
                             </option>
                           ))
                         : "Loading"}
@@ -337,13 +336,15 @@ export default function TambahData() {
                     <Text color="gray.500" fontWeight={600}>
                       Kota/Kabupaten
                     </Text>
-                    <Box textAlign="left" overflow="scroll" maxH={500}>
+                    <Box textAlign="left">
                       <Stack
                         direction="column"
                         spacing={3}
                         borderWidth="1px"
                         borderRadius="lg"
                         p={2}
+                        overflow="scroll"
+                        maxH={500}
                       >
                         {region && provinceId !== "" ? (
                           region.map(
@@ -360,12 +361,13 @@ export default function TambahData() {
                                     type="checkbox"
                                     colorScheme="orange"
                                     name="region_id"
+                                    ref={cb}
                                     id={`region_id ${d.id}`}
                                     onChange={(e) => {
-                                      const cb = document.getElementById(
-                                        `region_id ${d.id}`
-                                      ) as HTMLInputElement;
-                                      if (cb.checked === true) {
+                                      // const cb = document.getElementById(
+                                      //   `region_id ${d.id}`
+                                      // ) as HTMLInputElement;
+                                      if (cb.current.checked === true) {
                                         formik.values.region_ids.push(
                                           e.target.value
                                         );
@@ -386,26 +388,27 @@ export default function TambahData() {
                                           );
                                         }
                                       }
-                                      regionlist.innerText = `${formik.values.region_name.join(
+                                      regionlist.current.innerText = `${formik.values.region_name.join(
                                         ", "
                                       )}`;
                                     }}
                                     value={d.id}
                                     key={d.id}
                                   >
-                                    {d.name}
+                                    {_.startCase(d.name.toLowerCase())}
                                   </Checkbox>
                                 ) : (
                                   <Checkbox
                                     type="checkbox"
                                     colorScheme="orange"
+                                    ref={cb}
                                     name="region_id"
                                     id={`region_id ${d.id}`}
                                     onChange={(e) => {
-                                      const cb = document.getElementById(
-                                        `region_id ${d.id}`
-                                      ) as HTMLInputElement;
-                                      if (cb.checked === true) {
+                                      // const cb = document.getElementById(
+                                      //   `region_id ${d.id}`
+                                      // ) as HTMLInputElement;
+                                      if (cb.current.checked === true) {
                                         formik.values.region_ids.push(
                                           e.target.value
                                         );
@@ -426,14 +429,14 @@ export default function TambahData() {
                                           );
                                         }
                                       }
-                                      regionlist.innerText = `${formik.values.region_name.join(
+                                      regionlist.current.innerText = `${formik.values.region_name.join(
                                         ", "
                                       )}`;
                                     }}
                                     value={d.id}
                                     key={d.id}
                                   >
-                                    {d.name}
+                                    {_.startCase(d.name.toLowerCase())}
                                   </Checkbox>
                                 )
                               ) : (

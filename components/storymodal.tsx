@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Icon,
   Button,
@@ -35,6 +35,7 @@ export default function StoryModal(data) {
   const { data: dataharga } = data;
   // console.log(dataharga);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const igpost = useRef(null);
 
   const bgImages = [PUStory1, PUStory2, PUStory3, PUStory4];
   const randomImage = bgImages[Math.floor(Math.random() * bgImages.length)];
@@ -46,9 +47,9 @@ export default function StoryModal(data) {
 
   function TakeaScreenshot() {
     function screenshot() {
-      const igpost = document.querySelector("#igpost") as HTMLCanvasElement;
-      const { left } = igpost.getBoundingClientRect();
-      html2canvas(igpost, {
+      // const igpost = document.querySelector("#igpost") as HTMLCanvasElement;
+      const { left } = igpost.current.getBoundingClientRect();
+      html2canvas(igpost.current, {
         x: left,
         y: window.scrollY,
       }).then((canvas) => {
@@ -97,6 +98,7 @@ export default function StoryModal(data) {
             bgImage={randomImage.src}
             bgPosition="center"
             bgSize="cover"
+            ref={igpost}
             width={width}
             height={height}
             p={4}
