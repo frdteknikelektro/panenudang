@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Stack,
+  Flex,
   Avatar,
   Box,
   Text,
@@ -33,7 +34,6 @@ export default function HargaCard(data) {
     <div>
       <Box
         key={dataharga.id}
-        maxW="xl"
         borderWidth="1px"
         borderRadius="lg"
         onClick={onOpen}
@@ -44,13 +44,14 @@ export default function HargaCard(data) {
         ) : (
           ""
         )}
-        <Stack direction="row" spacing={2}>
-          <Box p={2}>
+        <Flex direction="row" justify="center">
+          <Box p={2} w="20vw" align="center">
             <Avatar
+              size="md"
               src={`https://app.jala.tech/img/cache/original/${dataharga.creator.avatar}`}
             />
           </Box>
-          <Box p={2} w="xl">
+          <Box p={2} w="60vw">
             <Text fontSize="md" fontWeight="semibold">
               {_.startCase(dataharga.region.province_name.toLowerCase())},{" "}
               {_.startCase(dataharga.region.name.toLowerCase())}
@@ -60,7 +61,7 @@ export default function HargaCard(data) {
               {format(parseISO(dataharga.date), "d MMMM yyyy", { locale: id })}
             </Text>
           </Box>
-          <Box p={2} align="right">
+          <Box p={2} align="right" w="35vw">
             <Text fontSize="sm" color="gray.500">
               Size 100
             </Text>
@@ -68,7 +69,7 @@ export default function HargaCard(data) {
               {Intl.NumberFormat("id-ID").format(dataharga.size_100)}
             </Text>
           </Box>
-        </Stack>
+        </Flex>
       </Box>
 
       <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="md">
