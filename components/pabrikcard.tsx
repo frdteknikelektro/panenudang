@@ -78,7 +78,7 @@ export default function PabrikCard({ listPabrik }: PabrikValue) {
                   fontSize="sm"
                 >
                   {pabrik.totalTonase > 0
-                    ? pabrik.totalTonase + " ton"
+                    ? pabrik.totalTonase + " kg"
                     : "No weight"}
                 </Tag>
               </Box>
