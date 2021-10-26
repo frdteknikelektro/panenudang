@@ -21,7 +21,7 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import format from "date-fns/format";
 import { useFormik, FormikErrors } from "formik";
 import useSWR, { trigger } from "swr";
-import _ from "lodash";
+import _, { create, values } from "lodash";
 
 const fetcher = async (
   input: RequestInfo,
@@ -34,6 +34,9 @@ const fetcher = async (
 
 export default function TambahData() {
   const [provinceId, setProvinceId] = useState("");
+  const [createDate, setCreateDate] = useState(
+    format(new Date(), "yyyy-MM-dd")
+  );
 
   const toast = useToast();
   const router = useRouter();
@@ -200,7 +203,7 @@ export default function TambahData() {
       region_id: "",
       region_ids: [],
       region_name: [],
-      date: format(new Date(), "yyyy-MM-dd"),
+      date: createDate,
       species_id: 1,
       size_20: 0,
       size_30: 0,
@@ -229,6 +232,7 @@ export default function TambahData() {
     validate,
     onSubmit: (values) => {
       submitData(values);
+      // console.log(values);
     },
   });
 
@@ -296,8 +300,8 @@ export default function TambahData() {
                       Tanggal
                     </Text>
                     <Input
-                      id="tanggal"
-                      name="tanggal"
+                      id="date"
+                      name="date"
                       type="date"
                       onChange={formik.handleChange}
                       value={formik.values.date}

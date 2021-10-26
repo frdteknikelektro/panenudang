@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.pabrik-tablist {
+  overflow: scroll;
+}
+
+.pabrik-tablist::-webkit-scrollbar {
+  display: none;
+}

@@ -74,8 +74,8 @@ export default function PengaturanPabrik(dataPabrik) {
             🍤 {"   "} Pengaturan Pabrik
           </DrawerHeader>
           <DrawerBody p={2}>
-            <Tabs isFitted variant="soft-rounded" colorScheme="orange">
-              <TabList mb="1em">
+            <Tabs isLazy variant="soft-rounded" colorScheme="orange">
+              <TabList mb="1em" className="pabrik-tablist">
                 {data
                   ? data.map((d: { id: string; fields: PabrikFields }) => (
                       <Tab key={d.id}>{d.fields.initial_name}</Tab>
