@@ -48,7 +48,7 @@ export default function HargaEditForm(data) {
   const toast = useToast();
 
   function editData(value) {
-    // console.log(data.id, value)
+    // console.log(data.id, value, dataharga.id);
     fetch(`https://app.jala.tech/api/shrimp_prices/${dataharga.id}`, {
       method: "PUT",
       body: JSON.stringify(value),
@@ -130,8 +130,8 @@ export default function HargaEditForm(data) {
             </Text>
             <Input
               mb={2}
-              id="tanggal"
-              name="tanggal"
+              id="date"
+              name="date"
               type="date"
               onChange={formik.handleChange}
               value={formik.values.date}
