@@ -27,7 +27,7 @@ import HargaEditForm from "./hargaeditform";
 import _ from "lodash";
 
 export default function HargaCard(data) {
-  const { data: dataharga } = data;
+  const { data: dataharga, size = 100 } = data;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -63,10 +63,12 @@ export default function HargaCard(data) {
           </Box>
           <Box p={2} align="right" w="35vw">
             <Text fontSize="sm" color="gray.500">
-              Size 100
+              Size {size}
             </Text>
             <Text fontSize="2xl" fontWeight="bold">
-              {Intl.NumberFormat("id-ID").format(dataharga.size_100)}
+              {(dataharga[`size_${size}`] &&
+                Intl.NumberFormat("id-ID").format(dataharga[`size_${size}`])) ||
+                "-"}
             </Text>
           </Box>
         </Flex>
