@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
@@ -15,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
+import SizeSlider from "../components/sizeslider";
 import HargaCard from "../components/hargacard";
 import TambahData from "../components/tambahdata";
 import PanenUdangImg from "../public/PanenUdanghead.png";
@@ -76,6 +78,7 @@ export default function Harga() {
   //   console.log(response.data.data);
 
   const { data: dataharga } = response.data;
+  const [size, setSize] = useState(100);
 
   // console.log(dataharga);
 
@@ -109,10 +112,13 @@ export default function Harga() {
           <Heading mb={4} mt={4} as="h3" size="md" color="gray.600">
             Harga Terbaru
           </Heading>
+          <Box mb={4}>
+            <SizeSlider size={size} onChange={setSize} />
+          </Box>
           <Stack spacing={4} direction="column">
             {dataharga
               ? dataharga.map((d: { id: any }) => (
-                  <HargaCard key={d.id} data={d} />
+                  <HargaCard key={d.id} data={d} size={size} />
                 ))
               : "no data"}
           </Stack>
