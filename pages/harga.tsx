@@ -34,6 +34,7 @@ const fetcher = async (
 };
 
 export default function Harga() {
+  const [size, setSize] = useState(100);
   const router = useRouter();
   const response = useSWR(
     `https://app.jala.tech/api/shrimp_prices?search&with=creator,species,region&sort=size_100&created_by__in=10579&sort=created_at,desc`,
@@ -78,7 +79,6 @@ export default function Harga() {
   //   console.log(response.data.data);
 
   const { data: dataharga } = response.data;
-  const [size, setSize] = useState(100);
 
   // console.log(dataharga);
 

@@ -20,4 +20,4 @@ yarn
 yarn run dev
 ```
 
-*Developed on nodejs@14*
+_Developed on nodejs@14_
